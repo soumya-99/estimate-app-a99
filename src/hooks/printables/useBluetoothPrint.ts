@@ -32,6 +32,7 @@ import useCalculations from "../useCalculations"
 import usePrintCalculations from "../usePrintCalculations"
 import { AppStoreContext, Bill } from "../../models/custom_types"
 
+// import ThermalPrinterModule from 'react-native-thermal-printer';
 import ThermalPrinterModule from 'react-native-thermal-printer';
 
 export const useBluetoothPrint = () => {

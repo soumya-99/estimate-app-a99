@@ -7,7 +7,6 @@ import {
   RefreshControl,
   Alert,
   Linking,
-  Animated,
 } from "react-native"
 import React, { useCallback, useContext, useEffect, useState } from "react"
 import SplashScreen from "react-native-splash-screen"
@@ -544,6 +543,13 @@ function HomeScreen() {
                   )
                 }>
                 ALL BILLS
+              </Button>
+            </View> */}
+            {/* <View>
+              <Button
+                textColor={theme.colors.onPinkContainer}
+                onPress={handlePrint}>
+                TEST
               </Button>
             </View> */}
           </SurfacePaper>

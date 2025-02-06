@@ -20,7 +20,7 @@ import useLogout from "../hooks/api/useLogout"
 import useCategories from "../hooks/api/useCategories"
 import useSendOtp2 from "../hooks/api/useSendOtp2"
 import { AppStoreContext } from "../models/custom_types"
-// import RNEzetapSdk from "react-native-ezetap-sdk"
+import RNEzetapSdk from "react-native-ezetap-sdk"
 import DeviceInfo from "react-native-device-info"
 
 export const AppStore = createContext<AppStoreContext>(null)
@@ -53,35 +53,35 @@ const AppContext = ({ children }) => {
     setDeviceId(uniqueId)
   }, [])
 
-  // const initRazorpay = async () => {
-  //   var withAppKey =
-  //     '{"userName":' +
-  //     "9903044748" +
-  //     ',"demoAppKey":"a40c761a-b664-4bc6-ab5a-bf073aa797d5","prodAppKey":"a40c761a-b664-4bc6-ab5a-bf073aa797d5","merchantName":"SYNERGIC_SOFTEK_SOLUTIONS","appMode":"DEMO","currencyCode":"INR","captureSignature":false,"prepareDevice":false}'
-  //   var response = await RNEzetapSdk.initialize(withAppKey)
-  //   console.log("XXXXXXXXXXCCCCCCCCCCCCCC========RES", response)
-  //   // var jsonData = JSON.parse(response)
-  //   // setRazorpayInitializationJson(jsonData)
-  //   ezetapStorage.set("ezetap-initialization-json", response)
-  // }
+  const initRazorpay = async () => {
+    var withAppKey =
+      '{"userName":' +
+      "9903044748" +
+      ',"demoAppKey":"a40c761a-b664-4bc6-ab5a-bf073aa797d5","prodAppKey":"a40c761a-b664-4bc6-ab5a-bf073aa797d5","merchantName":"SYNERGIC_SOFTEK_SOLUTIONS","appMode":"DEMO","currencyCode":"INR","captureSignature":false,"prepareDevice":false}'
+    var response = await RNEzetapSdk.initialize(withAppKey)
+    console.log("XXXXXXXXXXCCCCCCCCCCCCCC========RES", response)
+    // var jsonData = JSON.parse(response)
+    // setRazorpayInitializationJson(jsonData)
+    ezetapStorage.set("ezetap-initialization-json", response)
+  }
 
-  // const init = async () => {
-  //   console.log(
-  //     "PPPPPPPPPPPPKKKKKKKKKKKKK",
-  //     ezetapStorage.contains("ezetap-initialization-json"),
-  //     ezetapStorage.getString("ezetap-initialization-json"),
-  //   )
-  //   // if (!ezetapStorage.contains("ezetap-initialization-json")) {
-  //   await initRazorpay()
+  const init = async () => {
+    console.log(
+      "PPPPPPPPPPPPKKKKKKKKKKKKK",
+      ezetapStorage.contains("ezetap-initialization-json"),
+      ezetapStorage.getString("ezetap-initialization-json"),
+    )
+    // if (!ezetapStorage.contains("ezetap-initialization-json")) {
+    await initRazorpay()
 
-  //   var res = await RNEzetapSdk.prepareDevice()
-  //   console.warn("RAZORPAY===PREPARE DEVICE", res)
-  //   // }
-  // }
+    var res = await RNEzetapSdk.prepareDevice()
+    console.warn("RAZORPAY===PREPARE DEVICE", res)
+    // }
+  }
 
-  // useEffect(() => {
-  //   init()
-  // }, [])
+  useEffect(() => {
+    init()
+  }, [])
 
   // useEffect(() => {
   //   const handleAppStateChange = (nextAppState) => {
@@ -291,8 +291,8 @@ const AppContext = ({ children }) => {
         handleGetCategories,
         units,
         handleGetUnits,
-        deviceId
-        // init
+        deviceId,
+        init
       }}>
       {children}
     </AppStore.Provider>

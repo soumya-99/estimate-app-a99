@@ -25,6 +25,7 @@
     "react-native-date-picker": "^5.0.7",
     "react-native-device-info": "^10.14.0",
     "react-native-element-dropdown": "^2.12.2",
+    "react-native-ezetap-sdk": "^1.2.1",
     "react-native-fast-image": "^8.6.3",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.22.0",

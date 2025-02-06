@@ -129,6 +129,7 @@ dependencies {
     implementation("androidx.core:core:1.9.0") {
         exclude group: 'com.android.support', module: 'support-compat'
     }
+    implementation project(':react-native-ezetap-sdk')
 }
 
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
