@@ -18,7 +18,7 @@ class MainApplication : Application(), ReactApplication {
         override fun getPackages(): List<ReactPackage> =
             PackageList(this).packages.apply {
               // Packages that cannot be autolinked yet can be added manually here, for example:
-              // add(MyReactNativePackage())
+              add(ReceiptPrinterPackage()) // Add this line to manually include the ReceiptPrinterPackage
             }
 
         override fun getJSMainModuleName(): String = "index"
