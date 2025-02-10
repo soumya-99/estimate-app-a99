@@ -1822,27 +1822,27 @@ export const useBluetoothPrint = () => {
     // let totalAmountAfterDiscount: number = 0
 
     let text =
-      `ESTIMATE\n` +
-      `=============================\n` +
+      `[C]ESTIMATE\n` +
+      `[C]=============================\n` +
       // `[L]   RCPT. NO.\n` +
       // `[L]   ${rcptNo?.toString()}\n` +
-      `DATE   ${new Date().toLocaleDateString("en-GB")}\n` +
-      `=============================\n` +
-      `Item   Qty   Amount\n` +
-      `=============================\n`;
+      `[L]   DATE[L]${new Date().toLocaleDateString("en-GB")}\n` +
+      `[C]=============================\n` +
+      `[L]   Item[C]Qty[L]Amount\n` +
+      `[C]=============================\n`;
 
     for (const item of addedProducts) {
       totalQuantities += +item?.quantity
-      text += `${item?.item_name?.slice(0, 12)}   ${item?.quantity}   ${+item?.price * +item?.quantity}\n` +
-        `                            \n`;
+      text += `[L]   ${item?.item_name?.slice(0, 12)}[C]${item?.quantity}[L]${+item?.price * +item?.quantity}\n` +
+        `[C]                            \n`;
     }
 
-    text += `=============================\n` +
+    text += `[C]=============================\n` +
 
       // `[L]Item[C]Qty[R]Amount\n` +
-      `${addedProducts?.length}   ${totalQuantities}   ${netTotal?.toFixed(2)}\n` +
-      `=============================\n` +
-      `ROUND OFF   ${roundingOffCalculate(netTotal, 0)}\n` +
+      `[L]   ${addedProducts?.length}[C]${totalQuantities}[L]${netTotal?.toFixed(2)}\n` +
+      `[C]=============================\n` +
+      `[L]   ROUND OFF[L]${roundingOffCalculate(netTotal, 0)}\n` +
 
       // if (paymentMode === "C") {
       //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
@@ -1855,66 +1855,21 @@ export const useBluetoothPrint = () => {
 
       // text += `[L]   Mode[L]${paymentMode === "C" ? "CR" : paymentMode === "R" ? "Credit" : paymentMode === "U" ? "UPI" : "Err"}\n` +
 
-      `GRAND TOTAL   ${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
-      `============X============\n`;
-    // let text =
-    //   `[C]ESTIMATE\n` +
-    //   `[C]=============================\n` +
-    //   // `[L]   RCPT. NO.\n` +
-    //   // `[L]   ${rcptNo?.toString()}\n` +
-    //   `[L]   DATE[L]${new Date().toLocaleDateString("en-GB")}\n` +
-    //   `[C]=============================\n` +
-    //   `[L]   Item[C]Qty[L]Amount\n` +
-    //   `[C]=============================\n`;
+      `[L]   GRAND TOTAL[L]${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
+      `[C]============X============\n\n\n` +
+      `[C]                           \n\n`;
 
-    // for (const item of addedProducts) {
-    //   totalQuantities += +item?.quantity
-    //   text += `[L]   ${item?.item_name?.slice(0, 12)}[C]${item?.quantity}[L]${+item?.price * +item?.quantity}\n` +
-    //     `[C]                            \n`;
-    // }
-
-    // text += `[C]=============================\n` +
-
-    //   // `[L]Item[C]Qty[R]Amount\n` +
-    //   `[L]   ${addedProducts?.length}[C]${totalQuantities}[L]${netTotal?.toFixed(2)}\n` +
-    //   `[C]=============================\n` +
-    //   `[L]   ROUND OFF[L]${roundingOffCalculate(netTotal, 0)}\n` +
-
-    //   // if (paymentMode === "C") {
-    //   //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
-    //   //     `[L]   RETURN[L]${returnedAmt}\n`;
-    //   // }
-    //   // if (paymentMode === "R") {
-    //   //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
-    //   //     `[L]   DUE[L]${Math.abs(returnedAmt)}\n`;
-    //   // }
-
-    //   // text += `[L]   Mode[L]${paymentMode === "C" ? "CR" : paymentMode === "R" ? "Credit" : paymentMode === "U" ? "UPI" : "Err"}\n` +
-
-    //   `[L]   GRAND TOTAL[L]${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
-    //   `[C]============X============\n\n\n` +
-    //   `[C]                           \n\n`;
-
-    navigation.dispatch(
-      CommonActions.navigate({
-        name: navigationRoutes.printTemplateScreen,
-        params: {
-          textData: text
-        }
-      })
-    )
-
-    // await ThermalPrinterModule.printBluetooth({
-    //   payload: text,
-    //   printerNbrCharactersPerLine: 32,
-    //   printerDpi: 120,
-    //   printerWidthMM: 58,
-    //   mmFeedPaper: 25,
-    // }).then(res => {
-    //   console.log("RES", res)
-    // }).catch(err => {
-    //   console.log("ERR", err)
-    // })
+    await ThermalPrinterModule.printBluetooth({
+      payload: text,
+      printerNbrCharactersPerLine: 32,
+      printerDpi: 120,
+      printerWidthMM: 58,
+      mmFeedPaper: 25,
+    }).then(res => {
+      console.log("RES", res)
+    }).catch(err => {
+      console.log("ERR", err)
+    })
   }
 
   const rePrintT = async (
@@ -1935,27 +1890,28 @@ export const useBluetoothPrint = () => {
     // let totalAmountAfterDiscount: number = 0
 
     let text =
-      `ESTIMATE ${cancelFlag ? "(CANCELLED)" : "(DUPLICATE)"}\n` +
+      `[C]ESTIMATE ${cancelFlag ? "(CANCELLED)" : "(DUPLICATE)"}\n` +
       // `[C]==========DUPLICATE==========\n` +
-      `========================\n` +
+      `[C]========================\n` +
       // `[L]   RCPT. NO.\n` +
       // `[L]   ${rcptNo?.toString()}\n` +
-      `DATE   ${new Date().toLocaleDateString("en-GB")}\n` +
-      `========================\n` +
-      `Item   Qty   Amt\n` +
-      `========================\n`;
+      `[L]   DATE[L]${new Date().toLocaleDateString("en-GB")}\n` +
+      `[C]========================\n` +
+      `[L]   Item[C]Qty[L]Amt\n` +
+      `[C]========================\n`;
 
     for (const item of addedProducts) {
       totalQuantities += +item?.qty
-      text += `${item?.item_name?.slice(0, 12)}   ${item?.qty}   ${+item?.price * +item?.qty}\n`;
+      text += `[L]   ${item?.item_name?.slice(0, 12)}[C]${item?.qty}[L]${+item?.price * +item?.qty}\n` +
+        `[C]                            \n`;
     }
 
-    text += `========================\n` +
+    text += `[C]========================\n` +
 
       // `[L]Item[C]Qty[R]Amount\n` +
-      `${addedProducts?.length}   ${totalQuantities}   ${netTotal?.toFixed(2)}\n` +
-      `========================\n` +
-      `ROUND OFF   ${roundingOffCalculate(netTotal, 0)}\n`;
+      `[L]   ${addedProducts?.length}[C]${totalQuantities}[L]${netTotal?.toFixed(2)}\n` +
+      `[C]========================\n` +
+      `[L]   ROUND OFF[L]${roundingOffCalculate(netTotal, 0)}\n`;
 
     // if (paymentMode === "C") {
     //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
@@ -1966,65 +1922,21 @@ export const useBluetoothPrint = () => {
     //     `[L]   DUE[L]${Math.abs(returnedAmt)}\n`;
     // }
 
-    text += `GRAND TOTAL   ${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
-      `============X============\n`;
-    // let text =
-    //   `[C]ESTIMATE ${cancelFlag ? "(CANCELLED)" : "(DUPLICATE)"}\n` +
-    //   // `[C]==========DUPLICATE==========\n` +
-    //   `[C]========================\n` +
-    //   // `[L]   RCPT. NO.\n` +
-    //   // `[L]   ${rcptNo?.toString()}\n` +
-    //   `[L]   DATE[L]${new Date().toLocaleDateString("en-GB")}\n` +
-    //   `[C]========================\n` +
-    //   `[L]   Item[C]Qty[L]Amt\n` +
-    //   `[C]========================\n`;
+    text += `[L]   GRAND TOTAL[L]${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
+      `[C]============X============\n\n\n` +
+      `[C]                            \n\n`;
 
-    // for (const item of addedProducts) {
-    //   totalQuantities += +item?.qty
-    //   text += `[L]   ${item?.item_name?.slice(0, 12)}[C]${item?.qty}[L]${+item?.price * +item?.qty}\n` +
-    //     `[C]                            \n`;
-    // }
-
-    // text += `[C]========================\n` +
-
-    //   // `[L]Item[C]Qty[R]Amount\n` +
-    //   `[L]   ${addedProducts?.length}[C]${totalQuantities}[L]${netTotal?.toFixed(2)}\n` +
-    //   `[C]========================\n` +
-    //   `[L]   ROUND OFF[L]${roundingOffCalculate(netTotal, 0)}\n`;
-
-    // // if (paymentMode === "C") {
-    // //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
-    // //     `[L]   RETURN[L]${returnedAmt}\n`;
-    // // }
-    // // if (paymentMode === "R") {
-    // //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
-    // //     `[L]   DUE[L]${Math.abs(returnedAmt)}\n`;
-    // // }
-
-    // text += `[L]   GRAND TOTAL[L]${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
-    //   `[C]============X============\n\n\n` +
-    //   `[C]                            \n\n`;
-
-    // await ThermalPrinterModule.printBluetooth({
-    //   payload: text,
-    //   printerNbrCharactersPerLine: 32,
-    //   printerDpi: 120,
-    //   printerWidthMM: 58,
-    //   mmFeedPaper: 25,
-    // }).then(res => {
-    //   console.log("RES", res)
-    // }).catch(err => {
-    //   console.log("ERR", err)
-    // })
-
-    navigation.dispatch(
-      CommonActions.navigate({
-        name: navigationRoutes.printTemplateScreen,
-        params: {
-          textData: text
-        }
-      })
-    )
+    await ThermalPrinterModule.printBluetooth({
+      payload: text,
+      printerNbrCharactersPerLine: 32,
+      printerDpi: 120,
+      printerWidthMM: 58,
+      mmFeedPaper: 25,
+    }).then(res => {
+      console.log("RES", res)
+    }).catch(err => {
+      console.log("ERR", err)
+    })
   }
 
   const printProductwiseSaleReport = async (
@@ -2033,16 +1945,16 @@ export const useBluetoothPrint = () => {
     toDate: string,
   ) => {
     let text =
-      `PRODUCTWISE ESTIMATES\n` +
-      `PRINT AT:   ${new Date().toLocaleString("en-GB")}\n` +
-      `========================\n` +
-      `FROM:   ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
-      `TO:   ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
-      `========================\n` +
+      `[C]PRODUCTWISE ESTIMATES\n` +
+      `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+      `[C]========================\n` +
+      `[L]   FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
+      `[L]   TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
+      `[C]========================\n` +
       // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
-      `Item   Qty\n` +
-      `Unit Price   Net\n` +
-      `========================\n`;
+      `[L]   Item[L]Qty\n` +
+      `[L]   Unit Price[L]Net\n` +
+      `[C]========================\n`;
 
     let totQty = 0;
     let totNet = 0;
@@ -2052,70 +1964,30 @@ export const useBluetoothPrint = () => {
       totQty += item?.tot_item_qty;
       totNet += item?.tot_item_price;
 
-      text += `${item?.item_name}   ${item?.tot_item_qty}   ${item?.unit_name?.charAt(0)}\n` +
-        `${item?.unit_price}   ${item?.tot_item_price}\n` +
-        `------------------------\n`;
+      text += `[L]   ${item?.item_name}[L]${item?.tot_item_qty} ${item?.unit_name?.charAt(0)}\n` +
+        `[L]   ${item?.unit_price}[L]${item?.tot_item_price}\n` +
+        `[C]------------------------\n`;
     }
 
-    text += `========================\n` +
-      `Total Qty   ${totQty}\n` +
-      `Total Amt   ${totNet?.toFixed(2)}\n` +
-      `No of Items   ${reportData?.length}\n` +
+    text += `[C]========================\n` +
+      `[L]   Total Qty[L]${totQty}\n` +
+      `[L]   Total Amt[L]${totNet?.toFixed(2)}\n` +
+      `[L]   No of Items[L]${reportData?.length}\n` +
       // `[L]Cash Receive[R]${reportData[0]?.tot_received_cash}\n` +
-      `============X============\n`;
-    // let text =
-    //   `[C]PRODUCTWISE ESTIMATES\n` +
-    //   `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
-    //   `[C]========================\n` +
-    //   `[L]   FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
-    //   `[L]   TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
-    //   `[C]========================\n` +
-    //   // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
-    //   `[L]   Item[L]Qty\n` +
-    //   `[L]   Unit Price[L]Net\n` +
-    //   `[C]========================\n`;
+      `[C]============X============\n\n\n` +
+      `[C]                           \n\n`;
 
-    // let totQty = 0;
-    // let totNet = 0;
-    // let totAvgPrice = 0;
-
-    // for (const item of reportData) {
-    //   totQty += item?.tot_item_qty;
-    //   totNet += item?.tot_item_price;
-
-    //   text += `[L]   ${item?.item_name}[L]${item?.tot_item_qty} ${item?.unit_name?.charAt(0)}\n` +
-    //     `[L]   ${item?.unit_price}[L]${item?.tot_item_price}\n` +
-    //     `[C]------------------------\n`;
-    // }
-
-    // text += `[C]========================\n` +
-    //   `[L]   Total Qty[L]${totQty}\n` +
-    //   `[L]   Total Amt[L]${totNet?.toFixed(2)}\n` +
-    //   `[L]   No of Items[L]${reportData?.length}\n` +
-    //   // `[L]Cash Receive[R]${reportData[0]?.tot_received_cash}\n` +
-    //   `[C]============X============\n\n\n` +
-    //   `[C]                           \n\n`;
-
-    // await ThermalPrinterModule.printBluetooth({
-    //   payload: text,
-    //   printerNbrCharactersPerLine: 32,
-    //   printerDpi: 120,
-    //   printerWidthMM: 58,
-    //   mmFeedPaper: 25,
-    // }).then(res => {
-    //   console.log("RES", res)
-    // }).catch(err => {
-    //   console.log("ERR", err)
-    // })
-
-    navigation.dispatch(
-      CommonActions.navigate({
-        name: navigationRoutes.printTemplateScreen,
-        params: {
-          textData: text
-        }
-      })
-    )
+    await ThermalPrinterModule.printBluetooth({
+      payload: text,
+      printerNbrCharactersPerLine: 32,
+      printerDpi: 120,
+      printerWidthMM: 58,
+      mmFeedPaper: 25,
+    }).then(res => {
+      console.log("RES", res)
+    }).catch(err => {
+      console.log("ERR", err)
+    })
   }
 
   const printSaleReport = async (
@@ -2412,17 +2284,17 @@ export const useBluetoothPrint = () => {
       `DATE: ${new Date(date)?.toLocaleDateString("en-GB")}\n` +
       `=========================\n` +
       // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
-      `Name    Phone    Due\n` +
+      `   Name  Phone  Due\n` +
       `=========================\n`;
 
     let i = 1
     for (const item of reportData) {
-      text += `${item?.cust_name?.slice(0, 5)}    ${item?.phone_no}    ${item?.due_amt}\n` +
+      text += `   ${item?.cust_name?.slice(0, 5)}  ${item?.phone_no}  ${item?.due_amt}\n` +
         `                     \n`;
     }
 
     text += `=========================\n` +
-      `Rows Count    ${reportData?.length}\n` +
+      `   Rows Count ${reportData?.length}\n` +
       `============X============\n`;
 
     // let text =

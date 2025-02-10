@@ -11,6 +11,7 @@ import CategoryProductsScreen from "../screens/CategoryProductsScreen"
 import CategoryProductScreen from "../screens/CategoryProductScreen"
 import CartScreen from "../screens/CartScreen"
 import CalculateModeBillScreen from "../screens/CalculateModeBillScreen"
+import PrintTemplateScreen from "../screens/print/PrintTemplateScreen"
 
 export default function HomeNavigation() {
   const Stack = createNativeStackNavigator()
@@ -66,6 +67,10 @@ export default function HomeNavigation() {
       <Stack.Screen
         name={navigationRoutes.calculateModeBillScreen}
         component={CalculateModeBillScreen}
+      />
+      <Stack.Screen
+        name={navigationRoutes.printTemplateScreen}
+        component={PrintTemplateScreen}
       />
 
     </Stack.Navigator>

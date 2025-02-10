@@ -38,8 +38,12 @@ type RootStackParamList = {
     billed_sale_data: ShowBillData[]
     // customer_phone_number: string
   }
+  PrintTemplateScreen: {
+    textData: string
+  }
 }
 
+type PrintTemplateScreenRouteProp = RouteProp<RootStackParamList, "PrintTemplateScreen">
 type ProductsScreenRouteProp = RouteProp<RootStackParamList, "ProductsScreen">
 type CategoriesScreenRouteProp = RouteProp<RootStackParamList, "CategoriesScreen">
 type CategoryProductsScreenRouteProp = RouteProp<RootStackParamList, "CategoryProductsScreen">
@@ -61,5 +65,6 @@ export type {
   CameraScreenRouteProp,
   RefundItemsScreenRouteProp,
   ReceiptsAgainstMobileScreenRouteProp,
-  CategoryProductScreenRouteProp
+  CategoryProductScreenRouteProp,
+  PrintTemplateScreenRouteProp
 }

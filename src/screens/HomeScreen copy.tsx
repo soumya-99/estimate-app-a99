@@ -41,7 +41,7 @@ import {
 import SurfacePaper from "../components/SurfacePaper"
 import DialogBox from "../components/DialogBox"
 import normalize, { SCREEN_HEIGHT, SCREEN_WIDTH } from "react-native-normalize"
-// import ScrollableListContainer from "../components/ScrollableListContainer"
+import ScrollableListContainer from "../components/ScrollableListContainer"
 import { loginStorage } from "../storage/appStorage"
 import { CalculatorShowBillData, LoginData, LoginDataMessage, RecentBillsData, ShowBillData } from "../models/api_types"
 import { AppStore } from "../context/AppContext"
@@ -49,19 +49,19 @@ import useBillSummary from "../hooks/api/useBillSummary"
 import useRecentBills from "../hooks/api/useRecentBills"
 import useShowBill from "../hooks/api/useShowBill"
 import useCalculatorShowBill from "../hooks/api/useCalculatorShowBill"
-// import AddedProductList from "../components/AddedProductList"
-// import NetTotalForRePrints from "../components/NetTotalForRePrints"
+import AddedProductList from "../components/AddedProductList"
+import NetTotalForRePrints from "../components/NetTotalForRePrints"
 import { useBluetoothPrint } from "../hooks/printables/useBluetoothPrint"
 import useVersionCheck from "../hooks/api/useVersionCheck"
 import DeviceInfo from "react-native-device-info"
-// import ButtonPaper from "../components/ButtonPaper"
+import ButtonPaper from "../components/ButtonPaper"
 import useCancelBill from "../hooks/api/useCancelBill"
 import useCalculations from "../hooks/useCalculations"
 import DialogBoxForReprint from "../components/DialogBoxForReprint"
 import DialogForBillsInCalculatorMode from "../components/DialogForBillsInCalculatorMode"
 import { AppStoreContext } from "../models/custom_types"
-// import { ADDRESSES } from "../config/api_list"
-// import { NativeModules } from 'react-native';
+import { ADDRESSES } from "../config/api_list"
+import { NativeModules } from 'react-native';
 
 function HomeScreen() {
   const theme = usePaperColorScheme()
@@ -411,6 +411,20 @@ function HomeScreen() {
 
   let totalQty: number = 0
 
+
+  const { ReceiptPrinter } = NativeModules;
+
+  const handlePrint = () => {
+    ReceiptPrinter.initializeEzeAPI((message) => {
+      console.log(message);
+      if (message === "Initialization successful") {
+        ReceiptPrinter.printCustomReceipt(base64String, (message) => {
+          console.log(message);
+        });
+      }
+    });
+  };
+
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -549,17 +563,7 @@ function HomeScreen() {
             <View>
               <Button
                 textColor={theme.colors.onPinkContainer}
-                onPress={() =>
-                  navigation.dispatch(
-                    CommonActions.navigate({
-                      name: navigationRoutes.printTemplateScreen,
-                      params: {
-                        textData: "=========RECEIPT=========\nUGUydgzsuygbdsuyg\nUTYyutsaduygdsyfuiu\nyugasdftsdgfuysdu"
-                      }
-                    })
-                  )
-                }
-              >
+                onPress={handlePrint}>
                 TEST
               </Button>
             </View>

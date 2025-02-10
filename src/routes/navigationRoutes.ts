@@ -71,6 +71,7 @@ const navigationRoutes = {
   calculateModeNavigation: "CalculateModeNavigation",
   calculateModeScreen: "CalculateModeScreen",
   calculateModeBillScreen: "CalculateModeBillScreen",
+  printTemplateScreen: "PrintTemplateScreen",
   saleReportCalculateModeScreen: "SaleReportCalculateModeScreen",
 }
 

@@ -11,7 +11,7 @@ import navigationRoutes from "../routes/navigationRoutes"
 import { useContext } from "react"
 import { AppStore } from "../context/AppContext"
 import { AppStoreContext } from "../models/custom_types"
-import PrintTemplate from "./print/PrintTemplate"
+import PrintTemplateScreen from "./print/PrintTemplateScreen"
 
 function ReportsScreen() {
   const navigation = useNavigation()
@@ -27,22 +27,6 @@ function ReportsScreen() {
   // })
   const filteredReportScreenData = REPORT_SCREEN_DATA
 
-
-
-  const sampleText =
-    `[C]ESTIMATE\n` +
-    `[C]=============================\n` +
-    `[L]   DATE[L]${new Date().toLocaleDateString("en-GB")}\n` +
-    `[C]=============================\n` +
-    `[L]   Item[C]Qty[L]Amount\n` +
-    `[C]=============================\n` +
-    `[L]   ${45}[C]${10}[L]${65455}\n` +
-    `[C]=============================\n` +
-    `[L]   ROUND OFF[L]${"roundingOffCalculate(netTotal, 0)"}\n` +
-    `[L]   GRAND TOTAL[L]${"grandTotalCalculate(netTotal, 0).toFixed(2)"}\n` +
-    `[C]============X============\n\n\n` +
-    `[C]                           \n\n`;
-
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -56,7 +40,7 @@ function ReportsScreen() {
             My Reports
           </HeaderImage>
         </View>
-        {/* <ReportButtonsWrapper>
+        <ReportButtonsWrapper>
           {
             filteredReportScreenData.map((item, index) => {
               return (
@@ -77,8 +61,7 @@ function ReportsScreen() {
               )
             })
           }
-        </ReportButtonsWrapper> */}
-        <PrintTemplate receiptText={sampleText} />
+        </ReportButtonsWrapper>
       </ScrollView>
     </SafeAreaView>
   )
