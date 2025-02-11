@@ -10,6 +10,7 @@ import SearchBillsByItemScreen from "../screens/SearchBillsByItemScreen"
 import RefundReprintScreen from "../screens/RefundReprintScreen"
 import RecoveryAmountScreen from "../screens/RecoveryAmountScreen"
 import CategoryProductsScreen from "../screens/CategoryProductsScreen"
+import PrintTemplateScreen from "../screens/print/PrintTemplateScreen"
 
 export default function MoreNavigation() {
   const Stack = createNativeStackNavigator()
@@ -57,6 +58,10 @@ export default function MoreNavigation() {
         name={navigationRoutes.categoryProductsScreen}
         component={CategoryProductsScreen}
         options={{ animation: "simple_push" }}
+      />
+      <Stack.Screen
+        name={navigationRoutes.printTemplateScreen}
+        component={PrintTemplateScreen}
       />
     </Stack.Navigator>
   )

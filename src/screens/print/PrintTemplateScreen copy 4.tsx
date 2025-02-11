@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { ScrollView, Platform, Dimensions, PermissionsAndroid, NativeModules } from 'react-native';
+import { View, Text, NativeModules, PermissionsAndroid, Platform, ScrollView, Dimensions } from 'react-native';
 import { CommonActions, useNavigation, useRoute } from '@react-navigation/native';
 import { PrintTemplateScreenRouteProp } from '../../models/route_types';
 import Canvas from 'react-native-canvas';
@@ -47,45 +47,38 @@ const PrintTemplateScreen = () => {
       const canvas = canvasRef.current;
       if (canvas) {
         const context = canvas.getContext('2d');
-        const { width } = Dimensions.get('window');
+        const { width, height } = Dimensions.get('window');
 
-        // Set canvas dimensions to smaller size for low-quality output
-        const canvasWidth = width / 2; // Reduce width
-        const canvasHeight = text.split('\n').length * 13; // Adjust height based on reduced line height
-        canvas.width = canvasWidth;
+        // Set canvas dimensions to be larger than the viewport
+        const canvasHeight = height * 2;  // Adjust this value based on your content height
+        canvas.width = width;
         canvas.height = canvasHeight;
 
         context.fillStyle = '#FFFFFF';
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = '#000000';
-        context.font = '13px Arial'; // Smaller font for compact size
-        context.textAlign = 'center'; // Align text to center
-        context.textBaseline = 'top';
+        context.font = '20px Arial';
+        context.textAlign = 'left';
 
-        // Render text line by line
-        const centerX = canvasWidth / 2; // Calculate horizontal center
-        const startY = 10; // Top margin
-        const lineHeight = 13; // Reduced vertical spacing
         const lines = text.split('\n');
-
         lines.forEach((line, index) => {
-          context.fillText(line, centerX, startY + index * lineHeight); // Center text
+          context.fillText(line, 10, 30 + index * 30);
         });
 
-        // Export canvas to low-quality image
-        canvas.toDataURL('image/jpeg', 0.0000001).then(dataURL => {
+        // Capture the canvas as an image with very low quality
+        canvas.toDataURL('image/jpeg', 0.0000000001).then(dataURL => {
           const base64String = dataURL.split(',')[1];
           console.log(base64String);
 
-          // Save the image
+          // Save the image in the current directory
           const path = `${RNFS.DocumentDirectoryPath}/sample.jpg`;
           RNFS.writeFile(path, base64String, 'base64').then(() => {
             console.log('Image saved at:', path);
 
-            // Printing logic
+            // Now you can use the base64String for printing or any other purpose
             ReceiptPrinter.initializeEzeAPI((message) => {
               console.log(message);
-              if (message === 'Initialization successful') {
+              if (message === "Initialization successful") {
                 ReceiptPrinter.printCustomReceipt(base64String, (message) => {
                   console.log(message);
                 });
@@ -109,15 +102,9 @@ const PrintTemplateScreen = () => {
   }, []);
 
   return (
-    <ScrollView
-      style={{ padding: 0, backgroundColor: '#FFFFFF', margin: 0 }}
-      contentContainerStyle={{
-        height: 'auto',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <ScrollView style={{ padding: 0, backgroundColor: "#FFFFFF", margin: 0, height: "auto", justifyContent: "center", alignItems: "center" }}>
       <Canvas ref={canvasRef} style={{ width: '100%', height: '100%' }} />
+      {/* <ButtonPaper mode='elevated' onPress={handleCapture}>PRINT</ButtonPaper> */}
     </ScrollView>
   );
 };

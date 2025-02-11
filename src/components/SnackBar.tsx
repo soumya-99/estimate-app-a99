@@ -73,8 +73,8 @@ const SnackBar = ({ handleBtn1Press, handleBtn2Press, handleBtn3Press, totAmt, c
                 gap: -5
             }}>
                 <Text variant="bodyMedium" ellipsizeMode='tail' numberOfLines={2} style={{ color: theme.colors.onVanilla, textAlign: "center", paddingHorizontal: 15, flexWrap: "wrap" }}>Net Total</Text>
-                <Text style={{ color: theme.colors.onVanilla, textAlign: "center", paddingHorizontal: 15, flexWrap: "wrap" }}>•</Text>
-                <Text style={{ color: theme.colors.onVanilla, textAlign: "center", paddingHorizontal: 15, flexWrap: "wrap" }}>₹{totAmt}</Text>
+                <Text style={{ color: theme.colors.onVanilla, textAlign: "center", paddingHorizontal: 15, flexWrap: "wrap", marginTop: -5 }}>•</Text>
+                <Text style={{ color: theme.colors.onVanilla, textAlign: "center", paddingHorizontal: 15, flexWrap: "wrap", marginTop: -5 }}>₹{totAmt}</Text>
             </View>
 
             {totQty ? <View style={{
@@ -86,8 +86,8 @@ const SnackBar = ({ handleBtn1Press, handleBtn2Press, handleBtn3Press, totAmt, c
                 gap: -5
             }}>
                 <Text variant="bodyMedium" ellipsizeMode='tail' numberOfLines={2} style={{ color: theme.colors.onVanilla, textAlign: "center", paddingHorizontal: 5, flexWrap: "wrap" }}>Total Qty</Text>
-                <Text style={{ color: theme.colors.onVanilla, textAlign: "center", paddingHorizontal: 5, flexWrap: "wrap" }}>•</Text>
-                <Text style={{ color: theme.colors.onVanilla, textAlign: "center", paddingHorizontal: 5, flexWrap: "wrap" }}>{totQty}</Text>
+                <Text style={{ color: theme.colors.onVanilla, textAlign: "center", paddingHorizontal: 5, flexWrap: "wrap", marginTop: -5 }}>•</Text>
+                <Text style={{ color: theme.colors.onVanilla, textAlign: "center", paddingHorizontal: 5, flexWrap: "wrap", marginTop: -5 }}>{totQty}</Text>
             </View> : null}
 
             <View style={{

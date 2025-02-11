@@ -1828,21 +1828,21 @@ export const useBluetoothPrint = () => {
       // `[L]   ${rcptNo?.toString()}\n` +
       `DATE   ${new Date().toLocaleDateString("en-GB")}\n` +
       `=============================\n` +
-      `Item   Qty   Amount\n` +
+      `Item     Qty     Amount\n` +
       `=============================\n`;
 
     for (const item of addedProducts) {
       totalQuantities += +item?.quantity
-      text += `${item?.item_name?.slice(0, 12)}   ${item?.quantity}   ${+item?.price * +item?.quantity}\n` +
+      text += `${item?.item_name?.slice(0, 12)}     ${item?.quantity}     ${(+item?.price * +item?.quantity)?.toFixed(2)}\n` +
         `                            \n`;
     }
 
     text += `=============================\n` +
 
       // `[L]Item[C]Qty[R]Amount\n` +
-      `${addedProducts?.length}   ${totalQuantities}   ${netTotal?.toFixed(2)}\n` +
+      `${addedProducts?.length}     ${totalQuantities}     ${netTotal?.toFixed(2)}\n` +
       `=============================\n` +
-      `ROUND OFF   ${roundingOffCalculate(netTotal, 0)}\n` +
+      `ROUND OFF    ${roundingOffCalculate(netTotal, 0)}\n` +
 
       // if (paymentMode === "C") {
       //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
@@ -1942,18 +1942,18 @@ export const useBluetoothPrint = () => {
       // `[L]   ${rcptNo?.toString()}\n` +
       `DATE   ${new Date().toLocaleDateString("en-GB")}\n` +
       `========================\n` +
-      `Item   Qty   Amt\n` +
+      `Item     Qty     Amt\n` +
       `========================\n`;
 
     for (const item of addedProducts) {
       totalQuantities += +item?.qty
-      text += `${item?.item_name?.slice(0, 12)}   ${item?.qty}   ${+item?.price * +item?.qty}\n`;
+      text += `${item?.item_name?.slice(0, 12)}     ${item?.qty}     ${(+item?.price * +item?.qty)?.toFixed(2)}\n`;
     }
 
     text += `========================\n` +
 
       // `[L]Item[C]Qty[R]Amount\n` +
-      `${addedProducts?.length}   ${totalQuantities}   ${netTotal?.toFixed(2)}\n` +
+      `${addedProducts?.length}     ${totalQuantities}     ${netTotal?.toFixed(2)}\n` +
       `========================\n` +
       `ROUND OFF   ${roundingOffCalculate(netTotal, 0)}\n`;
 
@@ -2040,8 +2040,8 @@ export const useBluetoothPrint = () => {
       `TO:   ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
       `========================\n` +
       // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
-      `Item   Qty\n` +
-      `Unit Price   Net\n` +
+      `Item     Qty\n` +
+      `Unit Price     Net\n` +
       `========================\n`;
 
     let totQty = 0;
@@ -2052,8 +2052,8 @@ export const useBluetoothPrint = () => {
       totQty += item?.tot_item_qty;
       totNet += item?.tot_item_price;
 
-      text += `${item?.item_name}   ${item?.tot_item_qty}   ${item?.unit_name?.charAt(0)}\n` +
-        `${item?.unit_price}   ${item?.tot_item_price}\n` +
+      text += `${item?.item_name}     ${item?.tot_item_qty}     ${item?.unit_name?.charAt(0)}\n` +
+        `${item?.unit_price}     ${item?.tot_item_price}\n` +
         `------------------------\n`;
     }
 
@@ -2219,42 +2219,50 @@ export const useBluetoothPrint = () => {
   ) => {
     // ["SL.", "QTY", "PRC", "DIS", "GST", "NET"],
     let text =
-      `[C]CANCELLED REPORT\n` +
-      `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
-      `[C]========================\n` +
-      `[L]   FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
-      `[L]   TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
-      `[C]========================\n` +
+      `CANCELLED REPORT\n` +
+      `PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+      `========================\n` +
+      `FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
+      `TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
+      `========================\n` +
       // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
-      `[L]   Sl.[C]Qty[C]Price[L]Net\n` +
-      `[C]========================\n`;
+      `Sl.   Qty   Price   Net\n` +
+      `========================\n`;
 
     let i = 1
     let totalNet = 0
     for (const item of reportData) {
       totalNet += item?.net_amt;
 
-      text += `[L]   ${i++}[C]${item?.no_of_items}[C]${item?.price}[L]${item?.net_amt}\n` +
-        `[C]------------------------\n`;
+      text += `${i++}   ${item?.no_of_items}   ${item?.price}   ${item?.net_amt}\n` +
+        `------------------------\n`;
     }
 
-    text += `[C]========================\n` +
-      `[L]   Rows Count[L]${reportData?.length}\n` +
-      `[L]   Total Cncld[L]${totalNet}\n` +
-      `[C]============X============\n\n\n` +
-      `[C]                           \n\n`;
+    text += `========================\n` +
+      `Rows Count   ${reportData?.length}\n` +
+      `Total Cncld   ${totalNet}\n` +
+      `============X============\n`;
 
-    await ThermalPrinterModule.printBluetooth({
-      payload: text,
-      printerNbrCharactersPerLine: 32,
-      printerDpi: 120,
-      printerWidthMM: 58,
-      mmFeedPaper: 25,
-    }).then(res => {
-      console.log("RES", res)
-    }).catch(err => {
-      console.log("ERR", err)
-    })
+    // await ThermalPrinterModule.printBluetooth({
+    //   payload: text,
+    //   printerNbrCharactersPerLine: 32,
+    //   printerDpi: 120,
+    //   printerWidthMM: 58,
+    //   mmFeedPaper: 25,
+    // }).then(res => {
+    //   console.log("RES", res)
+    // }).catch(err => {
+    //   console.log("ERR", err)
+    // })
+
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: navigationRoutes.printTemplateScreen,
+        params: {
+          textData: text
+        }
+      })
+    )
   }
 
   const printCreditReport = async (
@@ -2360,16 +2368,16 @@ export const useBluetoothPrint = () => {
   ) => {
     // ["USER", "RCPTs", "NET", "CNCL"],
     let text =
-      `[C]USERWISE REPORT\n` +
-      `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
-      `[C]========================\n` +
-      `[L]   FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
-      `[L]   TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
-      `[C]========================\n` +
+      `USERWISE REPORT\n` +
+      `PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+      `========================\n` +
+      `FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
+      `TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
+      `========================\n` +
       // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
-      `[L]   User[C]Rcpts[L]Net\n` +
-      `[L]   Cash[L]Credit\n` +
-      `[C]========================\n`;
+      `User   Rcpts   Net\n` +
+      `Cash   Credit\n` +
+      `========================\n`;
 
     let totalNet = 0;
     let totalCan = 0;
@@ -2377,27 +2385,34 @@ export const useBluetoothPrint = () => {
     for (const item of reportData) {
       // totalDue += item?.cancelled_amt
 
-      text += `[L]   ${item?.user_name?.slice(0, 5)}[C]${item["sum(receipt_no)"]}[C]${item?.net_sale}\n` +
-        `[L]   ${item?.cash_sale}[L]${item?.credit_sale}\n`;
+      text += `${item?.user_name?.slice(0, 5)}   ${item["sum(receipt_no)"]}   ${item?.net_sale}\n` +
+        `${item?.cash_sale}   ${item?.credit_sale}\n`;
     }
 
     // text += `[C]========================\n` +
     // `[L]Rows Count[R]${reportData?.length}\n` +
     // `[L]Total Due[R]${totalDue}\n` +
-    text += `[C]============X============\n\n\n` +
-      `[C]                           \n\n`;
+    text += `============X============\n`;
 
-    await ThermalPrinterModule.printBluetooth({
-      payload: text,
-      printerNbrCharactersPerLine: 32,
-      printerDpi: 120,
-      printerWidthMM: 58,
-      mmFeedPaper: 25,
-    }).then(res => {
-      console.log("RES", res)
-    }).catch(err => {
-      console.log("ERR", err)
-    })
+    // await ThermalPrinterModule.printBluetooth({
+    //   payload: text,
+    //   printerNbrCharactersPerLine: 32,
+    //   printerDpi: 120,
+    //   printerWidthMM: 58,
+    //   mmFeedPaper: 25,
+    // }).then(res => {
+    //   console.log("RES", res)
+    // }).catch(err => {
+    //   console.log("ERR", err)
+    // })
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: navigationRoutes.printTemplateScreen,
+        params: {
+          textData: text
+        }
+      })
+    )
   }
 
   const printDueReport = async (
@@ -2469,27 +2484,34 @@ export const useBluetoothPrint = () => {
 
   const printRecoveryAmount = async (recAmt: RecoveryAmountResponseData[], phone: string) => {
     let text =
-      `[C]RECOVERY DETAILS\n` +
-      `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
-      `[C]=============================\n` +
+      `RECOVERY DETAILS\n` +
+      `PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+      `=============================\n` +
 
-      `[L]PHONE:[R]${phone}\n` +
-      `[L]TOTAL DUE[R]${recAmt[0]?.net_amt - recAmt[0]?.paid_amt}\n` +
-      `[L]TOTAL PAID[R]${recAmt[0]?.paid_amt}\n` +
-      `[C]==============X===============\n\n\n` +
-      `[C]                                \n\n`;
+      `PHONE:   ${phone}\n` +
+      `TOTAL DUE   ${recAmt[0]?.net_amt - recAmt[0]?.paid_amt}\n` +
+      `TOTAL PAID   ${recAmt[0]?.paid_amt}\n` +
+      `==============X===============\n`;
 
-    await ThermalPrinterModule.printBluetooth({
-      payload: text,
-      printerNbrCharactersPerLine: 32,
-      printerDpi: 120,
-      printerWidthMM: 58,
-      mmFeedPaper: 25,
-    }).then(res => {
-      console.log("RES", res)
-    }).catch(err => {
-      console.log("ERR", err)
-    })
+    // await ThermalPrinterModule.printBluetooth({
+    //   payload: text,
+    //   printerNbrCharactersPerLine: 32,
+    //   printerDpi: 120,
+    //   printerWidthMM: 58,
+    //   mmFeedPaper: 25,
+    // }).then(res => {
+    //   console.log("RES", res)
+    // }).catch(err => {
+    //   console.log("ERR", err)
+    // })
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: navigationRoutes.printTemplateScreen,
+        params: {
+          textData: text
+        }
+      })
+    )
   }
 
   // async function rePrintWithoutGst(

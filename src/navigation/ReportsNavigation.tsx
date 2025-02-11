@@ -10,6 +10,7 @@ import CustomerLedgerScreen from "../screens/CustomerLedgerScreen"
 import DueReportScreen from "../screens/DueReportScreen"
 import ProductwiseSaleReportScreen from "../screens/reports/ProductwiseSaleReportScreen"
 import CategoryProductsScreen from "../screens/CategoryProductsScreen"
+import PrintTemplateScreen from "../screens/print/PrintTemplateScreen"
 // import ItemReportScreen from "../screens/ItemReportScreen"
 // import GstStatementReportScreen from "../screens/GstStatementReportScreen"
 // import GstSummaryReportScreen from "../screens/GstSummaryReportScreen"
@@ -91,6 +92,10 @@ export default function ReportsNavigation() {
         name={navigationRoutes.categoryProductsScreen}
         component={CategoryProductsScreen}
         options={{ animation: "simple_push" }}
+      />
+      <Stack.Screen
+        name={navigationRoutes.printTemplateScreen}
+        component={PrintTemplateScreen}
       />
     </Stack.Navigator>
   )

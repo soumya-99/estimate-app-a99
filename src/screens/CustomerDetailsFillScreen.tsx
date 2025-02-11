@@ -44,7 +44,7 @@ import {
   TxnDetailsCreds,
 } from "../models/api_types"
 import useBillSms2 from "../hooks/api/useBillSms2"
-import QRCode from "react-native-qrcode-svg"
+// import QRCode from "react-native-qrcode-svg"
 // import RNEzetapSdk from "react-native-ezetap-sdk"
 
 const CustomerDetailsFillScreen = () => {
@@ -1104,7 +1104,6 @@ const CustomerDetailsFillScreen = () => {
                 buttonColor={theme.colors.primary}
                 textColor={theme.colors.onPrimary}
                 onPress={() => handlePrintReceipt(true)}
-                // onPress={() => handleSaveBillRazorpay(true)}
                 icon="cloud-print-outline"
                 loading={isLoading}
                 disabled={isDisabled}>

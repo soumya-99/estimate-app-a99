@@ -11,7 +11,6 @@ import navigationRoutes from "../routes/navigationRoutes"
 import { useContext } from "react"
 import { AppStore } from "../context/AppContext"
 import { AppStoreContext } from "../models/custom_types"
-import PrintTemplateScreen from "./print/PrintTemplateScreen"
 
 function ReportsScreen() {
   const navigation = useNavigation()

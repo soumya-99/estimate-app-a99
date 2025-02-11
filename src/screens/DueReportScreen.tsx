@@ -52,7 +52,7 @@ function DueReportScreen() {
         toDate: string,
         companyId: number,
         branchId: number,
-        userId: string,
+        // userId: string,
     ) => {
         setIsDisabled(true)
         setIsLoading(true)
@@ -60,7 +60,7 @@ function DueReportScreen() {
             comp_id: companyId,
             br_id: branchId,
             date: toDate,
-            user_id: userId,
+            user_id: loginStore?.user_id,
         }
         await fetchDueReport(dueReportCredObject)
             .then(res => {
@@ -174,7 +174,7 @@ function DueReportScreen() {
                                 formattedToDate,
                                 loginStore.comp_id,
                                 loginStore.br_id,
-                                loginStore?.user_id,
+                                // loginStore?.user_id,
                             )
                         }
                         mode="contained-tonal"
