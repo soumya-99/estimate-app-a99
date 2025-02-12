@@ -1,6 +1,6 @@
 {
-  "name": "ssvwsloan",
-  "version": "0.0.1",
+  "name": "estimateapp",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",

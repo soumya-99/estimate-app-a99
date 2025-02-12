@@ -55,6 +55,7 @@ function LoginScreen() {
   const [loginText, setLoginText] = useState<string>(() => "")
   const [passwordText, setPasswordText] = useState<string>(() => "")
   const [next, setNext] = useState<boolean>(() => false)
+  const [loading, setLoading] = useState<boolean>(() => false)
   // const [otpSent, setOtpSent] = useState<boolean>(() => false)
   // const [timer, setTimer] = useState<number>(() => 300)
 
@@ -281,16 +282,20 @@ function LoginScreen() {
                   <View>
                     <ButtonPaper
                       mode="contained"
-                      onPress={() => {
+                      onPress={async () => {
                         if (loginText !== "" && passwordText !== "") {
                           // setNext(!next)
-                          handleLogin(loginText, passwordText)
+                          setLoading(true)
+                          await handleLogin(loginText, passwordText)
+                          setLoading(false)
                           // setOtpSent(true)
                         } else {
                           ToastAndroid.show("Enter username or password properly.", ToastAndroid.SHORT)
                         }
                       }}
-                      icon="arrow-right">
+                      icon="arrow-right"
+                      loading={loading}
+                      disabled={loading}>
                       LOGIN
                     </ButtonPaper>
                   </View>

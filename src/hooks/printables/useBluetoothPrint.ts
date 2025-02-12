@@ -1868,13 +1868,13 @@ export const useBluetoothPrint = () => {
       // `[L]   ${rcptNo?.toString()}\n` +
       `[L]DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
       `[C]=============================\n` +
-      `[L]Item[C]Qty[R]Amount\n` +
+      `[L]Item[C]Qty[R]Amt\n` +
       `[C]=============================\n`;
 
     for (const item of addedProducts) {
       totalQuantities += +item?.quantity
-      text += `[L]${item?.item_name?.slice(0, 12)}[C]${item?.quantity}[R]${+item?.price * +item?.quantity}\n` +
-        `[C]                            \n`;
+      text += `[L]${item?.item_name?.slice(0, 15)}\n` +
+        `[C]${item?.quantity}[R]${+item?.price * +item?.quantity}\n`;
     }
 
     text += `[C]=============================\n` +
@@ -1988,8 +1988,9 @@ export const useBluetoothPrint = () => {
 
     for (const item of addedProducts) {
       totalQuantities += +item?.qty
-      text += `[L]${item?.item_name?.slice(0, 12)}[C]${item?.qty}[R]${+item?.price * +item?.qty}\n` +
-        `[C]                            \n`;
+      text += `[L]${item?.item_name?.slice(0, 15)}\n` +
+        `[C]${item?.qty}[R]${+item?.price * +item?.qty}\n`;
+      // `[C]                            \n`;
     }
 
     text += `[C]========================\n` +

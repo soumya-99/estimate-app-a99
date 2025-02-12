@@ -562,7 +562,7 @@ function CategoryProductScreen() {
                             //     }
                             // )
                             CommonActions.goBack()
-                        )} icon="plus-thick" textColor={theme.colors.vanillaSecondary} buttonColor={theme.colors.vanillaSecondaryContainer}>ADD ITEM</ButtonPaper>
+                        )} icon="plus-thick" textColor={theme.colors.vanillaSecondary} buttonColor={theme.colors.vanillaSecondaryContainer}>ADD MORE</ButtonPaper>
                     </View>
 
                 </View>
