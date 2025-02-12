@@ -2038,6 +2038,7 @@ export const useBluetoothPrint = () => {
     reportData: ProductwiseSaleReportData[],
     fromDate: string,
     toDate: string,
+    currentPage: number
   ) => {
     // let text =
     //   `PRODUCTWISE ESTIMATES\n` +
@@ -2075,6 +2076,7 @@ export const useBluetoothPrint = () => {
     let text =
       `[C]PRODUCTWISE ESTIMATES\n` +
       `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+      `[C]PAGE: ${currentPage}\n` +
       `[C]========================\n` +
       `[L]FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
       `[L]TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
