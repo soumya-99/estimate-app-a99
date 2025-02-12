@@ -1,4 +1,4 @@
-package com.ssvwsloan
+package com.estimateapp
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

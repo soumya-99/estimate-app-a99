@@ -1,4 +1,4 @@
-package com.ssvwsloan
+package com.estimateapp
 
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule

@@ -181,19 +181,20 @@ const AppContext = ({ children }) => {
   //   })
   // }
 
-  const isLoggedIn = () => {
-    if (loginStorage.getAllKeys().length === 0) {
-      console.log("IF - isLoggedIn")
-      setIsLogin(false)
-    } else {
-      console.log("ELSE - isLoggedIn")
-      setIsLogin(true)
-    }
-  }
+  // const isLoggedIn = () => {
+  //   if (loginStorage.getAllKeys().length === 0) {
+  //     console.log("IF - isLoggedIn") 
+  //     setIsLogin(false)
+  //   } else {
+  //     console.log("ELSE - isLoggedIn")
+  //     setIsLogin(true)
+  //   }
+  // }
 
   useEffect(() => {
-    if (appState.current === "active") {
-      isLoggedIn()
+    if (appState.current === "inactive") {
+      // isLoggedIn()
+      handleLogout()
     }
   }, [])
 
@@ -291,7 +292,7 @@ const AppContext = ({ children }) => {
         handleGetCategories,
         units,
         handleGetUnits,
-        deviceId,
+        deviceId
         // init
       }}>
       {children}

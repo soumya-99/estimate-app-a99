@@ -1,4 +1,4 @@
-package com.ssvwsloan
+package com.estimateapp
 
 import android.app.Application
 import com.facebook.react.PackageList
