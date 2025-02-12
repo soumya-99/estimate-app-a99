@@ -81,7 +81,7 @@ function ProductwiseSaleReportScreen() {
     }
   };
 
-  const itemsPerPage = 15;
+  const itemsPerPage = 12;
   const totalPages = Math.ceil(productwiseSaleReport.length / itemsPerPage);
   const paginatedData = productwiseSaleReport.slice(
     (currentPage - 1) * itemsPerPage,
