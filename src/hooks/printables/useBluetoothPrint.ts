@@ -1821,64 +1821,28 @@ export const useBluetoothPrint = () => {
     let totalQuantities: number = 0
     // let totalAmountAfterDiscount: number = 0
 
-    let text =
-      `ESTIMATE\n` +
-      `=============================\n` +
-      // `[L]   RCPT. NO.\n` +
-      // `[L]   ${rcptNo?.toString()}\n` +
-      `DATE   ${new Date().toLocaleDateString("en-GB")}\n` +
-      `=============================\n` +
-      `Item     Qty     Amount\n` +
-      `=============================\n`;
-
-    for (const item of addedProducts) {
-      totalQuantities += +item?.quantity
-      text += `${item?.item_name?.slice(0, 12)}     ${item?.quantity}     ${(+item?.price * +item?.quantity)?.toFixed(2)}\n` +
-        `                            \n`;
-    }
-
-    text += `=============================\n` +
-
-      // `[L]Item[C]Qty[R]Amount\n` +
-      `${addedProducts?.length}     ${totalQuantities}     ${netTotal?.toFixed(2)}\n` +
-      `=============================\n` +
-      `ROUND OFF    ${roundingOffCalculate(netTotal, 0)}\n` +
-
-      // if (paymentMode === "C") {
-      //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
-      //     `[L]   RETURN[L]${returnedAmt}\n`;
-      // }
-      // if (paymentMode === "R") {
-      //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
-      //     `[L]   DUE[L]${Math.abs(returnedAmt)}\n`;
-      // }
-
-      // text += `[L]   Mode[L]${paymentMode === "C" ? "CR" : paymentMode === "R" ? "Credit" : paymentMode === "U" ? "UPI" : "Err"}\n` +
-
-      `GRAND TOTAL   ${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
-      `============X============\n`;
     // let text =
-    //   `[C]ESTIMATE\n` +
-    //   `[C]=============================\n` +
+    //   `ESTIMATE\n` +
+    //   `=============================\n` +
     //   // `[L]   RCPT. NO.\n` +
     //   // `[L]   ${rcptNo?.toString()}\n` +
-    //   `[L]   DATE[L]${new Date().toLocaleDateString("en-GB")}\n` +
-    //   `[C]=============================\n` +
-    //   `[L]   Item[C]Qty[L]Amount\n` +
-    //   `[C]=============================\n`;
+    //   `DATE   ${new Date().toLocaleDateString("en-GB")}\n` +
+    //   `=============================\n` +
+    //   `Item     Qty     Amount\n` +
+    //   `=============================\n`;
 
     // for (const item of addedProducts) {
     //   totalQuantities += +item?.quantity
-    //   text += `[L]   ${item?.item_name?.slice(0, 12)}[C]${item?.quantity}[L]${+item?.price * +item?.quantity}\n` +
-    //     `[C]                            \n`;
+    //   text += `${item?.item_name?.slice(0, 12)}     ${item?.quantity}     ${(+item?.price * +item?.quantity)?.toFixed(2)}\n` +
+    //     `                            \n`;
     // }
 
-    // text += `[C]=============================\n` +
+    // text += `=============================\n` +
 
     //   // `[L]Item[C]Qty[R]Amount\n` +
-    //   `[L]   ${addedProducts?.length}[C]${totalQuantities}[L]${netTotal?.toFixed(2)}\n` +
-    //   `[C]=============================\n` +
-    //   `[L]   ROUND OFF[L]${roundingOffCalculate(netTotal, 0)}\n` +
+    //   `${addedProducts?.length}     ${totalQuantities}     ${netTotal?.toFixed(2)}\n` +
+    //   `=============================\n` +
+    //   `ROUND OFF    ${roundingOffCalculate(netTotal, 0)}\n` +
 
     //   // if (paymentMode === "C") {
     //   //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
@@ -1891,9 +1855,48 @@ export const useBluetoothPrint = () => {
 
     //   // text += `[L]   Mode[L]${paymentMode === "C" ? "CR" : paymentMode === "R" ? "Credit" : paymentMode === "U" ? "UPI" : "Err"}\n` +
 
-    //   `[L]   GRAND TOTAL[L]${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
-    //   `[C]============X============\n\n\n` +
-    //   `[C]                           \n\n`;
+    //   `GRAND TOTAL   ${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
+    //   `============X============\n`;
+
+
+
+
+    let text =
+      `[C]ESTIMATE\n` +
+      `[C]=============================\n` +
+      // `[L]   RCPT. NO.\n` +
+      // `[L]   ${rcptNo?.toString()}\n` +
+      `[L]DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
+      `[C]=============================\n` +
+      `[L]Item[C]Qty[R]Amount\n` +
+      `[C]=============================\n`;
+
+    for (const item of addedProducts) {
+      totalQuantities += +item?.quantity
+      text += `[L]${item?.item_name?.slice(0, 12)}[C]${item?.quantity}[R]${+item?.price * +item?.quantity}\n` +
+        `[C]                            \n`;
+    }
+
+    text += `[C]=============================\n` +
+
+      // `[L]Item[C]Qty[R]Amount\n` +
+      `[L]${addedProducts?.length}[C]${totalQuantities}[R]${netTotal?.toFixed(2)}\n` +
+      `[C]=============================\n` +
+      `[L]ROUND OFF[R]${roundingOffCalculate(netTotal, 0)}\n` +
+
+      // if (paymentMode === "C") {
+      //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
+      //     `[L]   RETURN[L]${returnedAmt}\n`;
+      // }
+      // if (paymentMode === "R") {
+      //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
+      //     `[L]   DUE[L]${Math.abs(returnedAmt)}\n`;
+      // }
+
+      // text += `[L]   Mode[L]${paymentMode === "C" ? "CR" : paymentMode === "R" ? "Credit" : paymentMode === "U" ? "UPI" : "Err"}\n` +
+
+      `[L]GRAND TOTAL[R]${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
+      `[C]============X============\n`;
 
     navigation.dispatch(
       CommonActions.navigate({
@@ -1934,63 +1937,28 @@ export const useBluetoothPrint = () => {
     let totalQuantities: number = 0
     // let totalAmountAfterDiscount: number = 0
 
-    let text =
-      `ESTIMATE ${cancelFlag ? "(CANCELLED)" : "(DUPLICATE)"}\n` +
-      // `[C]==========DUPLICATE==========\n` +
-      `========================\n` +
-      // `[L]   RCPT. NO.\n` +
-      // `[L]   ${rcptNo?.toString()}\n` +
-      `DATE   ${new Date().toLocaleDateString("en-GB")}\n` +
-      `========================\n` +
-      `Item     Qty     Amt\n` +
-      `========================\n`;
-
-    for (const item of addedProducts) {
-      totalQuantities += +item?.qty
-      text += `${item?.item_name?.slice(0, 12)}     ${item?.qty}     ${(+item?.price * +item?.qty)?.toFixed(2)}\n`;
-    }
-
-    text += `========================\n` +
-
-      // `[L]Item[C]Qty[R]Amount\n` +
-      `${addedProducts?.length}     ${totalQuantities}     ${netTotal?.toFixed(2)}\n` +
-      `========================\n` +
-      `ROUND OFF   ${roundingOffCalculate(netTotal, 0)}\n`;
-
-    // if (paymentMode === "C") {
-    //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
-    //     `[L]   RETURN[L]${returnedAmt}\n`;
-    // }
-    // if (paymentMode === "R") {
-    //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
-    //     `[L]   DUE[L]${Math.abs(returnedAmt)}\n`;
-    // }
-
-    text += `GRAND TOTAL   ${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
-      `============X============\n`;
     // let text =
-    //   `[C]ESTIMATE ${cancelFlag ? "(CANCELLED)" : "(DUPLICATE)"}\n` +
+    //   `ESTIMATE ${cancelFlag ? "(CANCELLED)" : "(DUPLICATE)"}\n` +
     //   // `[C]==========DUPLICATE==========\n` +
-    //   `[C]========================\n` +
+    //   `========================\n` +
     //   // `[L]   RCPT. NO.\n` +
     //   // `[L]   ${rcptNo?.toString()}\n` +
-    //   `[L]   DATE[L]${new Date().toLocaleDateString("en-GB")}\n` +
-    //   `[C]========================\n` +
-    //   `[L]   Item[C]Qty[L]Amt\n` +
-    //   `[C]========================\n`;
+    //   `DATE   ${new Date().toLocaleDateString("en-GB")}\n` +
+    //   `========================\n` +
+    //   `Item     Qty     Amt\n` +
+    //   `========================\n`;
 
     // for (const item of addedProducts) {
     //   totalQuantities += +item?.qty
-    //   text += `[L]   ${item?.item_name?.slice(0, 12)}[C]${item?.qty}[L]${+item?.price * +item?.qty}\n` +
-    //     `[C]                            \n`;
+    //   text += `${item?.item_name?.slice(0, 12)}     ${item?.qty}     ${(+item?.price * +item?.qty)?.toFixed(2)}\n`;
     // }
 
-    // text += `[C]========================\n` +
+    // text += `========================\n` +
 
     //   // `[L]Item[C]Qty[R]Amount\n` +
-    //   `[L]   ${addedProducts?.length}[C]${totalQuantities}[L]${netTotal?.toFixed(2)}\n` +
-    //   `[C]========================\n` +
-    //   `[L]   ROUND OFF[L]${roundingOffCalculate(netTotal, 0)}\n`;
+    //   `${addedProducts?.length}     ${totalQuantities}     ${netTotal?.toFixed(2)}\n` +
+    //   `========================\n` +
+    //   `ROUND OFF   ${roundingOffCalculate(netTotal, 0)}\n`;
 
     // // if (paymentMode === "C") {
     // //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
@@ -2001,9 +1969,47 @@ export const useBluetoothPrint = () => {
     // //     `[L]   DUE[L]${Math.abs(returnedAmt)}\n`;
     // // }
 
-    // text += `[L]   GRAND TOTAL[L]${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
-    //   `[C]============X============\n\n\n` +
-    //   `[C]                            \n\n`;
+    // text += `GRAND TOTAL   ${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
+    //   `============X============\n`;
+
+
+
+
+    let text =
+      `[C]ESTIMATE ${cancelFlag ? "(CANCELLED)" : "(DUPLICATE)"}\n` +
+      // `[C]==========DUPLICATE==========\n` +
+      `[C]========================\n` +
+      // `[L]   RCPT. NO.\n` +
+      // `[L]   ${rcptNo?.toString()}\n` +
+      `[L]   DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
+      `[C]========================\n` +
+      `[L]Item[C]Qty[R]Amt\n` +
+      `[C]========================\n`;
+
+    for (const item of addedProducts) {
+      totalQuantities += +item?.qty
+      text += `[L]${item?.item_name?.slice(0, 12)}[C]${item?.qty}[R]${+item?.price * +item?.qty}\n` +
+        `[C]                            \n`;
+    }
+
+    text += `[C]========================\n` +
+
+      // `[L]Item[C]Qty[R]Amount\n` +
+      `[L]${addedProducts?.length}[C]${totalQuantities}[R]${netTotal?.toFixed(2)}\n` +
+      `[C]========================\n` +
+      `[L]ROUND OFF[R]${roundingOffCalculate(netTotal, 0)}\n`;
+
+    // if (paymentMode === "C") {
+    //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
+    //     `[L]   RETURN[L]${returnedAmt}\n`;
+    // }
+    // if (paymentMode === "R") {
+    //   text += `[L]   RECEIVED[L]${cashAmount}\n` +
+    //     `[L]   DUE[L]${Math.abs(returnedAmt)}\n`;
+    // }
+
+    text += `[L]GRAND TOTAL[R]${grandTotalCalculate(netTotal, 0).toFixed(2)}\n` +
+      `[C]============X============\n`;
 
     // await ThermalPrinterModule.printBluetooth({
     //   payload: text,
@@ -2032,48 +2038,17 @@ export const useBluetoothPrint = () => {
     fromDate: string,
     toDate: string,
   ) => {
-    let text =
-      `PRODUCTWISE ESTIMATES\n` +
-      `PRINT AT:   ${new Date().toLocaleString("en-GB")}\n` +
-      `========================\n` +
-      `FROM:   ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
-      `TO:   ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
-      `========================\n` +
-      // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
-      `Item     Qty\n` +
-      `Unit Price     Net\n` +
-      `========================\n`;
-
-    let totQty = 0;
-    let totNet = 0;
-    let totAvgPrice = 0;
-
-    for (const item of reportData) {
-      totQty += item?.tot_item_qty;
-      totNet += item?.tot_item_price;
-
-      text += `${item?.item_name}     ${item?.tot_item_qty}     ${item?.unit_name?.charAt(0)}\n` +
-        `${item?.unit_price}     ${item?.tot_item_price}\n` +
-        `------------------------\n`;
-    }
-
-    text += `========================\n` +
-      `Total Qty   ${totQty}\n` +
-      `Total Amt   ${totNet?.toFixed(2)}\n` +
-      `No of Items   ${reportData?.length}\n` +
-      // `[L]Cash Receive[R]${reportData[0]?.tot_received_cash}\n` +
-      `============X============\n`;
     // let text =
-    //   `[C]PRODUCTWISE ESTIMATES\n` +
-    //   `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
-    //   `[C]========================\n` +
-    //   `[L]   FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
-    //   `[L]   TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
-    //   `[C]========================\n` +
+    //   `PRODUCTWISE ESTIMATES\n` +
+    //   `PRINT AT:   ${new Date().toLocaleString("en-GB")}\n` +
+    //   `========================\n` +
+    //   `FROM:   ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
+    //   `TO:   ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
+    //   `========================\n` +
     //   // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
-    //   `[L]   Item[L]Qty\n` +
-    //   `[L]   Unit Price[L]Net\n` +
-    //   `[C]========================\n`;
+    //   `Item     Qty\n` +
+    //   `Unit Price     Net\n` +
+    //   `========================\n`;
 
     // let totQty = 0;
     // let totNet = 0;
@@ -2083,18 +2058,50 @@ export const useBluetoothPrint = () => {
     //   totQty += item?.tot_item_qty;
     //   totNet += item?.tot_item_price;
 
-    //   text += `[L]   ${item?.item_name}[L]${item?.tot_item_qty} ${item?.unit_name?.charAt(0)}\n` +
-    //     `[L]   ${item?.unit_price}[L]${item?.tot_item_price}\n` +
-    //     `[C]------------------------\n`;
+    //   text += `${item?.item_name}     ${item?.tot_item_qty}     ${item?.unit_name?.charAt(0)}\n` +
+    //     `${item?.unit_price}     ${item?.tot_item_price}\n` +
+    //     `------------------------\n`;
     // }
 
-    // text += `[C]========================\n` +
-    //   `[L]   Total Qty[L]${totQty}\n` +
-    //   `[L]   Total Amt[L]${totNet?.toFixed(2)}\n` +
-    //   `[L]   No of Items[L]${reportData?.length}\n` +
+    // text += `========================\n` +
+    //   `Total Qty   ${totQty}\n` +
+    //   `Total Amt   ${totNet?.toFixed(2)}\n` +
+    //   `No of Items   ${reportData?.length}\n` +
     //   // `[L]Cash Receive[R]${reportData[0]?.tot_received_cash}\n` +
-    //   `[C]============X============\n\n\n` +
-    //   `[C]                           \n\n`;
+    //   `============X============\n`;
+
+
+    let text =
+      `[C]PRODUCTWISE ESTIMATES\n` +
+      `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+      `[C]========================\n` +
+      `[L]FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
+      `[L]TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
+      `[C]========================\n` +
+      // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
+      `[L]Item[R]Qty\n` +
+      `[L]Unit Price[R]Net\n` +
+      `[C]========================\n`;
+
+    let totQty = 0;
+    let totNet = 0;
+    let totAvgPrice = 0;
+
+    for (const item of reportData) {
+      totQty += item?.tot_item_qty;
+      totNet += item?.tot_item_price;
+
+      text += `[L]${item?.item_name}[R]${item?.tot_item_qty} ${item?.unit_name?.charAt(0)}\n` +
+        `[L]${item?.unit_price}[R]${item?.tot_item_price}\n` +
+        `[C]------------------------\n`;
+    }
+
+    text += `[C]========================\n` +
+      `[L]Total Qty[R]${totQty}\n` +
+      `[L]Total Amt[R]${totNet?.toFixed(2)}\n` +
+      `[L]No of Items[R]${reportData?.length}\n` +
+      // `[L]Cash Receive[R]${reportData[0]?.tot_received_cash}\n` +
+      `[C]============X============\n`;
 
     // await ThermalPrinterModule.printBluetooth({
     //   payload: text,
@@ -2218,30 +2225,58 @@ export const useBluetoothPrint = () => {
     toDate: string,
   ) => {
     // ["SL.", "QTY", "PRC", "DIS", "GST", "NET"],
+    // let text =
+    //   `CANCELLED REPORT\n` +
+    //   `PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+    //   `========================\n` +
+    //   `FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
+    //   `TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
+    //   `========================\n` +
+    //   // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
+    //   `Sl.   Qty   Price   Net\n` +
+    //   `========================\n`;
+
+    // let i = 1
+    // let totalNet = 0
+    // for (const item of reportData) {
+    //   totalNet += item?.net_amt;
+
+    //   text += `${i++}   ${item?.no_of_items}   ${item?.price}   ${item?.net_amt}\n` +
+    //     `------------------------\n`;
+    // }
+
+    // text += `========================\n` +
+    //   `Rows Count   ${reportData?.length}\n` +
+    //   `Total Cncld   ${totalNet}\n` +
+    //   `============X============\n`;
+
+
     let text =
-      `CANCELLED REPORT\n` +
-      `PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
-      `========================\n` +
-      `FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
-      `TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
-      `========================\n` +
+      `[C]CANCELLED REPORT\n` +
+      `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+      `[C]========================\n` +
+      `[L]   FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
+      `[L]   TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
+      `[C]========================\n` +
       // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
-      `Sl.   Qty   Price   Net\n` +
-      `========================\n`;
+      `[L]Sl.[R]Qty\n` +
+      `[L]Price[R]Net\n` +
+      `[C]========================\n`;
 
     let i = 1
     let totalNet = 0
     for (const item of reportData) {
       totalNet += item?.net_amt;
 
-      text += `${i++}   ${item?.no_of_items}   ${item?.price}   ${item?.net_amt}\n` +
-        `------------------------\n`;
+      text += `[L]${i++}[R]${item?.no_of_items}\n` +
+        `[L]${item?.price}[R]${item?.net_amt}\n` +
+        `[C]------------------------\n`;
     }
 
-    text += `========================\n` +
-      `Rows Count   ${reportData?.length}\n` +
-      `Total Cncld   ${totalNet}\n` +
-      `============X============\n`;
+    text += `[C]========================\n` +
+      `[L]Rows Count[R]${reportData?.length}\n` +
+      `[L]Total Cncld[R]${totalNet}\n` +
+      `[C]============X============\n`;
 
     // await ThermalPrinterModule.printBluetooth({
     //   payload: text,
@@ -2367,17 +2402,44 @@ export const useBluetoothPrint = () => {
     toDate: string,
   ) => {
     // ["USER", "RCPTs", "NET", "CNCL"],
+    // let text =
+    //   `USERWISE REPORT\n` +
+    //   `PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+    //   `========================\n` +
+    //   `FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
+    //   `TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
+    //   `========================\n` +
+    //   // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
+    //   `User   Rcpts   Net\n` +
+    //   `Cash   Credit\n` +
+    //   `========================\n`;
+
+    // let totalNet = 0;
+    // let totalCan = 0;
+
+    // for (const item of reportData) {
+    //   // totalDue += item?.cancelled_amt
+
+    //   text += `${item?.user_name?.slice(0, 5)}   ${item["sum(receipt_no)"]}   ${item?.net_sale}\n` +
+    //     `${item?.cash_sale}   ${item?.credit_sale}\n`;
+    // }
+
+    // // text += `[C]========================\n` +
+    // // `[L]Rows Count[R]${reportData?.length}\n` +
+    // // `[L]Total Due[R]${totalDue}\n` +
+    // text += `============X============\n`;
+
     let text =
-      `USERWISE REPORT\n` +
-      `PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
-      `========================\n` +
-      `FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
-      `TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
-      `========================\n` +
+      `[C]USERWISE REPORT\n` +
+      `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+      `[C]========================\n` +
+      `[L]   FROM: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
+      `[L]   TO: ${new Date(toDate)?.toLocaleDateString("en-GB")}\n` +
+      `[C]========================\n` +
       // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
-      `User   Rcpts   Net\n` +
-      `Cash   Credit\n` +
-      `========================\n`;
+      `[L]User[C]Rcpts[R]Net\n` +
+      `[L]Cash[R]Credit\n` +
+      `[C]========================\n`;
 
     let totalNet = 0;
     let totalCan = 0;
@@ -2385,14 +2447,14 @@ export const useBluetoothPrint = () => {
     for (const item of reportData) {
       // totalDue += item?.cancelled_amt
 
-      text += `${item?.user_name?.slice(0, 5)}   ${item["sum(receipt_no)"]}   ${item?.net_sale}\n` +
-        `${item?.cash_sale}   ${item?.credit_sale}\n`;
+      text += `[L]${item?.user_name?.slice(0, 5)}[C]${item["sum(receipt_no)"]}[R]${item?.net_sale}\n` +
+        `[L]${item?.cash_sale}[R]${item?.credit_sale}\n`;
     }
 
     // text += `[C]========================\n` +
     // `[L]Rows Count[R]${reportData?.length}\n` +
     // `[L]Total Due[R]${totalDue}\n` +
-    text += `============X============\n`;
+    text += `[C]============X============\n`;
 
     // await ThermalPrinterModule.printBluetooth({
     //   payload: text,
@@ -2420,46 +2482,45 @@ export const useBluetoothPrint = () => {
     date: string,
   ) => {
     // ["Sl.", "NAME", "PH", "DUE"],
-    let text =
-      `DUE REPORT\n` +
-      `PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
-      `=========================\n` +
-      `DATE: ${new Date(date)?.toLocaleDateString("en-GB")}\n` +
-      `=========================\n` +
-      // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
-      `Name    Phone    Due\n` +
-      `=========================\n`;
-
-    let i = 1
-    for (const item of reportData) {
-      text += `${item?.cust_name?.slice(0, 5)}    ${item?.phone_no}    ${item?.due_amt}\n` +
-        `                     \n`;
-    }
-
-    text += `=========================\n` +
-      `Rows Count    ${reportData?.length}\n` +
-      `============X============\n`;
-
     // let text =
-    //   `[C]DUE REPORT\n` +
-    //   `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
-    //   `[C]========================\n` +
-    //   `[C]DATE: ${new Date(date)?.toLocaleDateString("en-GB")}\n` +
-    //   `[C]========================\n` +
+    //   `DUE REPORT\n` +
+    //   `PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+    //   `=========================\n` +
+    //   `DATE: ${new Date(date)?.toLocaleDateString("en-GB")}\n` +
+    //   `=========================\n` +
     //   // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
-    //   `[L]   Name[C]Phone[L]Due\n` +
-    //   `[C]========================\n`;
+    //   `Name    Phone    Due\n` +
+    //   `=========================\n`;
 
     // let i = 1
     // for (const item of reportData) {
-    //   text += `[L]   ${item?.cust_name?.slice(0, 5)}[C]${item?.phone_no}[L]${item?.due_amt}\n` +
-    //     `[C]                     \n`;
+    //   text += `${item?.cust_name?.slice(0, 5)}    ${item?.phone_no}    ${item?.due_amt}\n` +
+    //     `                     \n`;
     // }
 
-    // text += `[C]========================\n` +
-    //   `[L]   Rows Count[L]${reportData?.length}\n` +
-    //   `[C]============X============\n\n\n` +
-    //   `[C]                           \n\n`;
+    // text += `=========================\n` +
+    //   `Rows Count    ${reportData?.length}\n` +
+    //   `============X============\n`;
+
+    let text =
+      `[C]DUE REPORT\n` +
+      `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+      `[C]========================\n` +
+      `[C]DATE: ${new Date(date)?.toLocaleDateString("en-GB")}\n` +
+      `[C]========================\n` +
+      // `[L]RCPT. DATE[R]${new Date().toLocaleDateString("en-GB")}\n` +
+      `[L]Name[C]Phone[R]Due\n` +
+      `[C]========================\n`;
+
+    let i = 1
+    for (const item of reportData) {
+      text += `[L]${item?.cust_name?.slice(0, 5)}[C]${item?.phone_no}[R]${item?.due_amt}\n` +
+        `[C]                     \n`;
+    }
+
+    text += `[C]========================\n` +
+      `[L]   Rows Count[R]${reportData?.length}\n` +
+      `[C]============X============\n`;
 
     // await ThermalPrinterModule.printBluetooth({
     //   payload: text,
@@ -2483,15 +2544,26 @@ export const useBluetoothPrint = () => {
   }
 
   const printRecoveryAmount = async (recAmt: RecoveryAmountResponseData[], phone: string) => {
-    let text =
-      `RECOVERY DETAILS\n` +
-      `PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
-      `=============================\n` +
+    // let text =
+    //   `RECOVERY DETAILS\n` +
+    //   `PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+    //   `=============================\n` +
 
-      `PHONE:   ${phone}\n` +
-      `TOTAL DUE   ${recAmt[0]?.net_amt - recAmt[0]?.paid_amt}\n` +
-      `TOTAL PAID   ${recAmt[0]?.paid_amt}\n` +
-      `==============X===============\n`;
+    //   `PHONE:   ${phone}\n` +
+    //   `TOTAL DUE   ${recAmt[0]?.net_amt - recAmt[0]?.paid_amt}\n` +
+    //   `TOTAL PAID   ${recAmt[0]?.paid_amt}\n` +
+    //   `==============X===============\n`;
+
+
+    let text =
+      `[C]RECOVERY DETAILS\n` +
+      `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+      `[C]=============================\n` +
+
+      `[L]PHONE[R]${phone}\n` +
+      `[L]TOTAL DUE[R]${recAmt[0]?.net_amt - recAmt[0]?.paid_amt}\n` +
+      `[L]TOTAL PAID[R]${recAmt[0]?.paid_amt}\n` +
+      `[C]=============X==============\n`;
 
     // await ThermalPrinterModule.printBluetooth({
     //   payload: text,
