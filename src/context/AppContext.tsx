@@ -50,6 +50,10 @@ const AppContext = ({ children }) => {
 
   useEffect(() => {
     const uniqueId = DeviceInfo.getUniqueIdSync()
+    // const uniqueId = DeviceInfo.getDeviceId()
+    console.log("----UNIQUE ID----", DeviceInfo.getUniqueId())
+    console.log("----UNIQUE ID SYNC----", DeviceInfo.getUniqueIdSync())
+    console.log("----UNIQUE----", DeviceInfo.getDeviceId())
     setDeviceId(uniqueId)
   }, [])
 

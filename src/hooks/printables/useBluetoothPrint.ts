@@ -1874,7 +1874,7 @@ export const useBluetoothPrint = () => {
     for (const item of addedProducts) {
       totalQuantities += +item?.quantity
       text += `[L]${item?.item_name?.slice(0, 15)}\n` +
-        `[C]${item?.quantity}[R]${+item?.price * +item?.quantity}\n`;
+        `[C]${item?.quantity}[R]${(+item?.price * +item?.quantity)?.toFixed(2)}\n`;
     }
 
     text += `[C]=============================\n` +
@@ -1989,7 +1989,7 @@ export const useBluetoothPrint = () => {
     for (const item of addedProducts) {
       totalQuantities += +item?.qty
       text += `[L]${item?.item_name?.slice(0, 15)}\n` +
-        `[C]${item?.qty}[R]${+item?.price * +item?.qty}\n`;
+        `[C]${item?.qty}[R]${(+item?.price * +item?.qty)?.toFixed(2)}\n`;
       // `[C]                            \n`;
     }
 
