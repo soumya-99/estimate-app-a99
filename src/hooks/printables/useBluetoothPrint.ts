@@ -2095,7 +2095,7 @@ export const useBluetoothPrint = () => {
       totNet += item?.tot_item_price;
 
       text += `[L]${item?.item_name}[R]${item?.tot_item_qty} ${item?.unit_name?.charAt(0)}\n` +
-        `[L]${item?.unit_price}[R]${item?.tot_item_price}\n` +
+        `[L]${item?.unit_price}[R]${item?.tot_item_price?.toFixed(2)}\n` +
         `[C]------------------------\n`;
     }
 
@@ -2149,7 +2149,7 @@ export const useBluetoothPrint = () => {
 
     for (const item of reportData) {
       text += `   [L]${item?.receipt_no?.toString()?.slice(-5)}[C]${item?.pay_mode === "C" ? "Cash" : item?.pay_mode === "U" ? "UPI" : item?.pay_mode === "R" ? "Credit" : "Err"}[L]${item?.no_of_items}\n` +
-        `[L]   ${item?.price}[L]${item?.net_amt}\n` +
+        `[L]   ${item?.price}[L]${item?.net_amt?.toFixed(2)}\n` +
         `[C]------------------------\n`;
     }
 
@@ -2197,15 +2197,15 @@ export const useBluetoothPrint = () => {
       // totCashReceipts += item?.no_of_rcpt
       totDueAmt += item?.due_amt
 
-      text += `[L]${item?.pay_mode === "C" ? "Cash" : item?.pay_mode === "U" ? "UPI" : item?.pay_mode === "R" ? "Credit" : item?.pay_mode === "Z" ? "Recovery" : "Err"}[C]${item?.pay_mode === "Z" ? "---" : item?.no_of_rcpt}[R]${item?.net_amt}\n` +
-        `[L]${item?.due_amt}[R]${item?.recover_amt}\n` +
+      text += `[L]${item?.pay_mode === "C" ? "Cash" : item?.pay_mode === "U" ? "UPI" : item?.pay_mode === "R" ? "Credit" : item?.pay_mode === "Z" ? "Recovery" : "Err"}[C]${item?.pay_mode === "Z" ? "---" : item?.no_of_rcpt}[R]${item?.net_amt?.toFixed(2)}\n` +
+        `[L]${item?.due_amt?.toFixed(2)}[R]${item?.recover_amt?.toFixed(2)}\n` +
         `-------------------------------\n`;
     }
 
     text += `[C]=============================\n` +
       `[L]Rows Count[R]${reportData?.length}\n` +
-      `[L]Total Net[R]${totCashReceive}\n` +
-      `[L]Total Due[R]${totDueAmt}\n` +
+      `[L]Total Net[R]${totCashReceive?.toFixed(2)}\n` +
+      `[L]Total Due[R]${totDueAmt?.toFixed(2)}\n` +
       `[C]==============X===============\n\n\n` +
       `[C]                                \n\n`;
 
@@ -2272,13 +2272,13 @@ export const useBluetoothPrint = () => {
       totalNet += item?.net_amt;
 
       text += `[L]${i++}[R]${item?.no_of_items}\n` +
-        `[L]${item?.price}[R]${item?.net_amt}\n` +
+        `[L]${item?.price}[R]${item?.net_amt?.toFixed(2)}\n` +
         `[C]------------------------\n`;
     }
 
     text += `[C]========================\n` +
       `[L]Rows Count[R]${reportData?.length}\n` +
-      `[L]Total Cncld[R]${totalNet}\n` +
+      `[L]Total Cncld[R]${totalNet?.toFixed(2)}\n` +
       `[C]============X============\n`;
 
     // await ThermalPrinterModule.printBluetooth({
@@ -2328,12 +2328,12 @@ export const useBluetoothPrint = () => {
       totalPaid += item?.paid_amt;
       totalDue += item?.due_amt;
 
-      text += `[L]${item?.receipt_no?.toString()?.slice(-5)}[C]${item?.net_amt}[C]${item?.paid_amt}[R]${item?.due_amt}\n`;
+      text += `[L]${item?.receipt_no?.toString()?.slice(-5)}[C]${item?.net_amt?.toFixed(2)}[C]${item?.paid_amt?.toFixed(2)}[R]${item?.due_amt?.toFixed(2)}\n`;
     }
 
 
     text += `[C]==============================\n` +
-      `[L]TOTAL:[C]${totalNet}[C]${totalPaid}[R]${totalDue}\n` +
+      `[L]TOTAL:[C]${totalNet?.toFixed(2)}[C]${totalPaid?.toFixed(2)}[R]${totalDue?.toFixed(2)}\n` +
       `[L]Rows Count[R]${reportData?.length}\n` +
       // `[L]Total Net[R]${totalNet}\n` +
       // `[L]Total Paid[R]${totalPaid}\n` +
