@@ -185,20 +185,20 @@ const AppContext = ({ children }) => {
   //   })
   // }
 
-  // const isLoggedIn = () => {
-  //   if (loginStorage.getAllKeys().length === 0) {
-  //     console.log("IF - isLoggedIn") 
-  //     setIsLogin(false)
-  //   } else {
-  //     console.log("ELSE - isLoggedIn")
-  //     setIsLogin(true)
-  //   }
-  // }
+  const isLoggedIn = () => {
+    if (loginStorage.getAllKeys().length === 0) {
+      console.log("IF - isLoggedIn")
+      setIsLogin(false)
+    } else {
+      console.log("ELSE - isLoggedIn")
+      setIsLogin(true)
+    }
+  }
 
   useEffect(() => {
-    if (appState.current === "inactive") {
-      // isLoggedIn()
-      handleLogout()
+    if (appState.current === "active") {
+      isLoggedIn()
+      // handleLogout()
     }
   }, [])
 
