@@ -61,6 +61,7 @@ export const ADDRESSES = {
   CALCULATOR_SALE_INSERT: `${BASE_URL}/api/calculator/saleinsert`,
   CALCULATOR_SHOW_BILL: `${BASE_URL}/api/calculator/show_bill`,
   CALCULATOR_SALE_REPORT: `${BASE_URL}/api/calculator/sale_report`,
+  BILLWISE_REPORT: `${BASE_URL}/api/billwise_report`,
 
   PRODUCTWISE_SALE_REPORT: `${BASE_URL}/api/productwise_report`,
 

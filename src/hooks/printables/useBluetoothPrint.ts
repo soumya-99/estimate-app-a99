@@ -4,6 +4,7 @@ import { fileStorage, loginStorage } from "../../storage/appStorage"
 import { useContext } from "react"
 import { AppStore } from "../../context/AppContext"
 import {
+  BillwiseReportData,
   CalculatorShowBillData,
   CancelledBillsReportData,
   CancelledBillsReportResponse,
@@ -2292,6 +2293,49 @@ export const useBluetoothPrint = () => {
     // }).catch(err => {
     //   console.log("ERR", err)
     // })
+
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: navigationRoutes.printTemplateScreen,
+        params: {
+          textData: text
+        }
+      })
+    )
+  }
+
+  const printBillwiseReport = async (
+    reportData: BillwiseReportData[],
+    fromDate: string,
+  ) => {
+
+    let text =
+      `[C]Estimatewise REPORT\n` +
+      `[C]PRINT AT: ${new Date().toLocaleString("en-GB")}\n` +
+      `[C]========================\n` +
+      `[L]   DATE: ${new Date(fromDate)?.toLocaleDateString("en-GB")}\n` +
+      `[C]========================\n` +
+      `[L]Sl.[R]Rcpt No.\n` +
+      `[L]Tot Qty.[R]Tot Amt.\n` +
+      `[C]========================\n`;
+
+    let i = 1
+    let totalNet = 0
+    let totalQty = 0
+    for (const item of reportData) {
+      totalNet += item?.net_amt;
+      totalQty += item?.qty;
+
+      text += `[L]${i++}[R]${item?.receipt_no}\n` +
+        `[L]${item?.qty}[R]${item?.net_amt?.toFixed(2)}\n` +
+        `[C]------------------------\n`;
+    }
+
+    text += `[C]========================\n` +
+      `[L]Rows Count[R]${reportData?.length}\n` +
+      `[L]Total Quantity[R]${totalQty}\n` +
+      `[L]Total Net[R]${totalNet?.toFixed(2)}\n` +
+      `[C]============X============\n`;
 
     navigation.dispatch(
       CommonActions.navigate({
@@ -8036,6 +8080,7 @@ export const useBluetoothPrint = () => {
     printReceiptT,
     rePrintT,
     printProductwiseSaleReport,
-    printSaleSummaryReport
+    printSaleSummaryReport,
+    printBillwiseReport
   }
 }

@@ -2,6 +2,8 @@ import navigationRoutes from "../../routes/navigationRoutes"
 
 export const REPORT_SCREEN_DATA = [
   { "text": "Productwise Estimates", "icon": "billboard", "route": navigationRoutes.productwiseSaleReportScreen },
+
+  { "text": "Estimates Report", "icon": "billboard", "route": navigationRoutes.billwiseReportScreen },
   // { "text": "Daybook Report", "icon": "billboard", "route": navigationRoutes.daybookReportScreen },
   // { "text": "Sale Report", "icon": "billboard", "route": navigationRoutes.saleReportScreen },
   // { "text": "Summary Report", "icon": "billboard", "route": navigationRoutes.saleSummaryScreen },

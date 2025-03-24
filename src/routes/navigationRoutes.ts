@@ -73,6 +73,7 @@ const navigationRoutes = {
   calculateModeBillScreen: "CalculateModeBillScreen",
   printTemplateScreen: "PrintTemplateScreen",
   saleReportCalculateModeScreen: "SaleReportCalculateModeScreen",
+  billwiseReportScreen: "BillwiseReportScreen",
 }
 
 export default navigationRoutes

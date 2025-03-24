@@ -663,6 +663,17 @@ export type CancelledBillsReportData = {
   "created_by": string
 }
 
+export type BillwiseReportData = {
+  "net_amt": number
+  "qty": number
+  "receipt_no": string
+}
+
+export type BillwiseResponse = {
+  "data": BillwiseReportData[],
+  "status": number
+}
+
 export type DaybookReportResponse = {
   "status": number
   "data": DaybookReportData[]

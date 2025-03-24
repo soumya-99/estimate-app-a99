@@ -9,6 +9,7 @@ import UserwiseReportScreen from "../screens/UserwiseReportScreen"
 import CustomerLedgerScreen from "../screens/CustomerLedgerScreen"
 import DueReportScreen from "../screens/DueReportScreen"
 import ProductwiseSaleReportScreen from "../screens/reports/ProductwiseSaleReportScreen"
+import BillwiseReportScreen from "../screens/reports/BillwiseReportScreen"
 import CategoryProductsScreen from "../screens/CategoryProductsScreen"
 import PrintTemplateScreen from "../screens/print/PrintTemplateScreen"
 // import ItemReportScreen from "../screens/ItemReportScreen"
@@ -87,6 +88,10 @@ export default function ReportsNavigation() {
       <Stack.Screen
         name={navigationRoutes.productwiseSaleReportScreen}
         component={ProductwiseSaleReportScreen}
+      />
+      <Stack.Screen
+        name={navigationRoutes.billwiseReportScreen}
+        component={BillwiseReportScreen}
       />
       <Stack.Screen
         name={navigationRoutes.categoryProductsScreen}

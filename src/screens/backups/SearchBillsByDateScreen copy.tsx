@@ -117,6 +117,73 @@ function SearchBillsByDateScreen() {
 
   const handleRePrintReceipt = (cancelFlag: boolean) => {
     if (billedSaleData.length > 0) {
+      // gstFlag === "N"
+      //   ? rePrintWithoutGst(
+      //     billedSaleData,
+      //     // netTotal,
+      //     billedSaleData[0]?.tprice,
+      //     // totalDiscount,
+      //     billedSaleData[0]?.tdiscount_amt,
+      //     billedSaleData[0]?.received_amt,
+      //     billedSaleData[0]?.received_amt !== undefined
+      //       ? billedSaleData[0]?.received_amt -
+      //       grandTotalCalculate(netTotal, totalDiscount)
+      //       : 0,
+      //     billedSaleData[0]?.cust_name,
+      //     billedSaleData[0]?.phone_no,
+      //     billedSaleData[0]?.receipt_no,
+      //     billedSaleData[0]?.pay_mode,
+      //     false,
+      //     false,
+      //     cancelFlag,
+      //   )
+      //   : gstType === "E"
+      //     ? rePrint(
+      //       billedSaleData,
+      //       // netTotal,
+      //       billedSaleData[0]?.tprice,
+      //       // totalDiscount,
+      //       billedSaleData[0]?.tdiscount_amt,
+      //       billedSaleData[0]?.received_amt,
+      //       billedSaleData[0]?.received_amt !== undefined
+      //         ? billedSaleData[0]?.received_amt -
+      //         parseFloat(
+      //           grandTotalWithGSTCalculate(
+      //             netTotal,
+      //             totalDiscount,
+      //             billedSaleData[0]?.tcgst_amt * 2,
+      //           ),
+      //         )
+      //         : 0,
+      //       billedSaleData[0]?.cust_name,
+      //       billedSaleData[0]?.phone_no,
+      //       billedSaleData[0]?.receipt_no,
+      //       billedSaleData[0]?.pay_mode,
+      //       false,
+      //       false,
+      //       cancelFlag,
+      //     )
+      //     : rePrint(
+      //       billedSaleData,
+      //       // netTotal,
+      //       billedSaleData[0]?.tprice,
+      //       // totalDiscount,
+      //       billedSaleData[0]?.tdiscount_amt,
+      //       billedSaleData[0]?.received_amt,
+      //       billedSaleData[0]?.received_amt !== undefined
+      //         ? billedSaleData[0]?.received_amt -
+      //         parseFloat(
+      //           grandTotalWithGSTInclCalculate(billedSaleData[0]?.tprice, billedSaleData[0]?.tdiscount_amt),
+      //         )
+      //         : 0,
+      //       billedSaleData[0]?.cust_name,
+      //       billedSaleData[0]?.phone_no,
+      //       billedSaleData[0]?.receipt_no,
+      //       billedSaleData[0]?.pay_mode,
+      //       false,
+      //       false,
+      //       cancelFlag,
+      //     )
       rePrintT(
         billedSaleData,
         // netTotal,
