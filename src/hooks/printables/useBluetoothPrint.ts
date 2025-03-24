@@ -2333,7 +2333,7 @@ export const useBluetoothPrint = () => {
 
     text += `[C]========================\n` +
       `[L]Rows Count[R]${reportData?.length}\n` +
-      `[L]Total Quantity[R]${totalQty}\n` +
+      `[L]Total Qty[R]${totalQty}\n` +
       `[L]Total Net[R]${totalNet?.toFixed(2)}\n` +
       `[C]============X============\n`;
 
