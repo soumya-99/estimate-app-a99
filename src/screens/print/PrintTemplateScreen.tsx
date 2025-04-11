@@ -1,9 +1,20 @@
 import React, { useRef, useEffect } from 'react';
-import { ScrollView, Platform, Dimensions, PermissionsAndroid, NativeModules } from 'react-native';
+import {
+  ScrollView,
+  Platform,
+  Dimensions,
+  PermissionsAndroid,
+  NativeModules,
+} from 'react-native';
 import { CommonActions, useNavigation, useRoute } from '@react-navigation/native';
 import Canvas from 'react-native-canvas';
 import RNFS from 'react-native-fs';
+import { WebView } from 'react-native-webview';
 import { PrintTemplateScreenRouteProp } from '../../models/route_types';
+
+if (!Canvas.WebView) {
+  Canvas.WebView = WebView;
+}
 
 const PrintTemplateScreen = () => {
   const navigation = useNavigation();
@@ -23,7 +34,7 @@ const PrintTemplateScreen = () => {
             buttonNeutral: 'Ask Me Later',
             buttonNegative: 'Cancel',
             buttonPositive: 'OK',
-          }
+          },
         );
         if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
           console.log('Storage permission denied');
@@ -72,16 +83,20 @@ const PrintTemplateScreen = () => {
           const tokenRegex = /(\[L\]|\[C\]|\[R\])([^\[]+)/g;
           const segments = [];
           let lastIndex = 0;
-          let match: RegExpExecArray | null;
+          let match;
 
           while ((match = tokenRegex.exec(line)) !== null) {
             if (match.index > lastIndex) {
-              segments.push({ align: 'left', text: line.substring(lastIndex, match.index) });
+              segments.push({
+                align: 'left',
+                text: line.substring(lastIndex, match.index),
+              });
             }
 
             const token = match[1];
             const segmentText = match[2];
-            const align = token === '[C]' ? 'center' : token === '[R]' ? 'right' : 'left';
+            const align =
+              token === '[C]' ? 'center' : token === '[R]' ? 'right' : 'left';
             segments.push({ align, text: segmentText });
             lastIndex = tokenRegex.lastIndex;
           }
@@ -96,38 +111,56 @@ const PrintTemplateScreen = () => {
 
           segments.forEach(segment => {
             context.textAlign = segment.align;
-            const x = segment.align === 'left' ? leftMargin : segment.align === 'center' ? centerX : rightMargin;
+            const x =
+              segment.align === 'left'
+                ? leftMargin
+                : segment.align === 'center'
+                  ? centerX
+                  : rightMargin;
             context.fillText(segment.text, x, y);
           });
-
         });
 
-        canvas.toDataURL('image/jpeg', 1).then(dataURL => {
-          const base64String = dataURL.split(',')[1];
+        canvas
+          .toDataURL('image/jpeg', 1)
+          .then(dataURL => {
+            const base64String = dataURL.split(',')[1];
 
-          const dirPath = `${RNFS.DownloadDirectoryPath}/print_longbitmap`;
-          const filePath = `${dirPath}/Sample.jpg`;
+            const dirPath = `${RNFS.DownloadDirectoryPath}/print_longbitmap`;
+            const filePath = `${dirPath}/Sample.jpg`;
 
-          RNFS.mkdir(dirPath)
-            .then(() => RNFS.writeFile(filePath, base64String, 'base64'))
-            .then(() => {
-              console.log('Image saved at:', filePath);
-              ReceiptPrinter.initializeEzeAPI((message) => {
-                console.log(message);
-                if (message === 'Initialization successful') {
-                  ReceiptPrinter.printLargeReceipt(filePath, (msg) => {
-                    console.log(msg);
-                  });
-                }
-                navigation.dispatch(CommonActions.goBack());
+            RNFS.mkdir(dirPath)
+              .then(() => RNFS.writeFile(filePath, base64String, 'base64'))
+              .then(() => {
+                console.log('Image saved at:', filePath);
+                ReceiptPrinter.initializeEzeAPI(message => {
+                  console.log(message);
+                  if (message === 'Initialization successful') {
+                    ReceiptPrinter.printLargeReceipt(filePath, msg => {
+                      console.log(msg);
+                    });
+                  }
+                  // navigation.dispatch(CommonActions.navigate('ReceiptScreen'));
+                  // navigation.dispatch(CommonActions.goBack());
+                  navigation.dispatch(
+                    CommonActions.reset({
+                      index: 0,
+                      routes: [
+                        { name: 'ReceiptScreen' },
+                        { name: 'OutpassScreenMain' },
+                      ],
+                    }),
+                  );
+                  navigation.dispatch(CommonActions.goBack());
+                });
+              })
+              .catch(error => {
+                console.error('Save failed:', error);
               });
-            })
-            .catch(error => {
-              console.error('Save failed:', error);
-            });
-        }).catch(error => {
-          console.error('Capture failed:', error);
-        });
+          })
+          .catch(error => {
+            console.error('Capture failed:', error);
+          });
       }
     } catch (error) {
       console.error('Capture failed:', error);
@@ -139,7 +172,12 @@ const PrintTemplateScreen = () => {
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <ScrollView
+      contentContainerStyle={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
       <Canvas ref={canvasRef} style={{ width: '100%', height: '100%' }} />
     </ScrollView>
   );

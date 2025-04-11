@@ -44,23 +44,23 @@ class ReceiptPrinterModule(reactContext: ReactApplicationContext) : ReactContext
         val activity = currentActivity
         if (activity != null) {
             val jsonRequest = JSONObject().apply {
-                // put("demoAppKey", "a40c761a-b664-4bc6-ab5a-bf073aa797d5")
-                // put("prodAppKey", "a40c761a-b664-4bc6-ab5a-bf073aa797d5")
-                // put("merchantName", "SYNERGIC_SOFTEK_SOLUTIONS")
-                // put("userName", "9903044748")
-                // put("currencyCode", "INR")
-                // put("appMode", "DEMO")
-                // put("captureSignature", false)
-                // put("prepareDevice", false)
-                /////////////////////////////////////////////////
-                put("demoAppKey", "8b94d199-d50e-466b-9471-126ba33c0cdf")
-                put("prodAppKey", "8b94d199-d50e-466b-9471-126ba33c0cdf")
-                put("merchantName", "SYNERGIC_SOFTEK_SOLUT_SBI")
-                put("userName", "2115350300")
+                put("demoAppKey", "a40c761a-b664-4bc6-ab5a-bf073aa797d5")
+                put("prodAppKey", "a40c761a-b664-4bc6-ab5a-bf073aa797d5")
+                put("merchantName", "SYNERGIC_SOFTEK_SOLUTIONS")
+                put("userName", "9903044748")
                 put("currencyCode", "INR")
-                put("appMode", "PROD")
+                put("appMode", "DEMO")
                 put("captureSignature", false)
                 put("prepareDevice", false)
+                /////////////////////////////////////////////////
+                // put("demoAppKey", "8b94d199-d50e-466b-9471-126ba33c0cdf")
+                // put("prodAppKey", "8b94d199-d50e-466b-9471-126ba33c0cdf")
+                // put("merchantName", "SYNERGIC_SOFTEK_SOLUT_SBI")
+                // put("userName", "2115350300")
+                // put("currencyCode", "INR")
+                // put("appMode", "PROD")
+                // put("captureSignature", false)
+                // put("prepareDevice", false)
             }
             this.callback = callback
             EzeAPI.initialize(activity, REQUEST_CODE_INITIALIZE, jsonRequest)

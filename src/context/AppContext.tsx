@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useRef, useState } from "react"
-import { AppState, Alert, ToastAndroid } from "react-native"
+import { AppState, Alert, ToastAndroid, Platform, PermissionsAndroid } from "react-native"
 import FastImage from 'react-native-fast-image'
 import { ezetapStorage, itemsContextStorage, loginStorage, productStorage } from "../storage/appStorage"
 import { fileStorage } from "../storage/appStorage"
@@ -106,6 +106,8 @@ const AppContext = ({ children }) => {
   //     subscription.remove();
   //   };
   // }, []);
+
+
 
   const handleLogin = async (loginText: string, passwordText: string) => {
     setFlagOtp(!flagOtp)
@@ -296,7 +298,7 @@ const AppContext = ({ children }) => {
         handleGetCategories,
         units,
         handleGetUnits,
-        deviceId
+        deviceId,
         // init
       }}>
       {children}
