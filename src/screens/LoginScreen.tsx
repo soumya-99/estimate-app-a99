@@ -33,7 +33,8 @@ import { AppStoreContext } from "../models/custom_types"
 import useUpdateLoginFlag from "../hooks/api/useUpdateLoginFlag"
 import { UpdateLoginFlagCredentials } from "../models/api_types"
 // import RNEzetapSdk from "react-native-ezetap-sdk"
-import DeviceInfo from 'react-native-device-info'
+import getDeviceSerialNumber from "../utils/getDeviceSerialNumber"
+import { getAndroidId, getDeviceId, getPhoneNumber, getSerialNumberSync, getUniqueId } from "react-native-device-info"
 
 function LoginScreen() {
   const navigation = useNavigation()
@@ -86,6 +87,17 @@ function LoginScreen() {
   //     openPhoneHintModal()
   //   }
   // }, [])
+
+  // const [serial, setSerial] = useState(null);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const deviceSerial = await getDeviceId();
+  //     console.log("Device Serial Number: ", deviceSerial);
+  //     setSerial(deviceSerial);
+  //   })();
+
+  // }, []);
 
   const onChangeCustomerMobileNumber = (mobile: string) => {
     // if (/^\d*$/.test(mobile)) {
@@ -320,6 +332,9 @@ function LoginScreen() {
                     <Text style={{
                       color: theme.colors.secondary
                     }}>Device ID</Text>
+                    {/* <Text variant="bodyLarge" style={{
+                      color: theme.colors.primary
+                    }}>{serial}</Text> */}
                     <Text variant="bodyLarge" style={{
                       color: theme.colors.primary
                     }}>{deviceId}</Text>
